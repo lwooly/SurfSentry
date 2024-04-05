@@ -1,0 +1,1 @@
+console.log('this is a message from my service worker')

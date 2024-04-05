@@ -25,6 +25,8 @@ const surfCheck = (spotIds) => {
         if (namedForecasts.length) {
             console.log('send a notification')
         }
+
+        
 })}
 
 surfCheck(spotIds)
