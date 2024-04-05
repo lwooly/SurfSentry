@@ -1,7 +1,5 @@
-import dotenv from "dotenv"
+import 'dotenv/config';
 import server from "./server.js";
-
-dotenv.config();
 
 const {PORT = 3000, NODE_ENV = 'development'} = process.env;
 
