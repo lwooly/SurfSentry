@@ -8,6 +8,7 @@ const subscribeBtn = document.querySelector('#subscribe')
 buttonVisibility(subscribeBtn)
 
 subscribeBtn.addEventListener('click', async () => {
+    console.log('subsciption button clicked')
     checkPermission()
     await requestNotificationPermission()
     buttonVisibility(subscribeBtn)
