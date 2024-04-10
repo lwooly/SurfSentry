@@ -1,24 +1,11 @@
 import pg from 'pg'
-const { Client } = pg
-
-const {
-    DB_HOST,
-    DB_NAME,
-    DB_PORT,
-    DB_USER
-} = process.env
-
-console.log(DB_HOST, 'test')
+const { Pool } = pg
  
-const client = new Client({
-  host: DB_HOST,
-  port: DB_PORT,
-  database: DB_NAME,
-  user: DB_USER,
+const pool = new Pool({
+  host: 'localhost',
+  user: 'lloydwoolacott',
+  database: 'surfscrape',
+  max: 20,
+  idleTimeoutMillis: 30000,
+  connectionTimeoutMillis: 2000,
 })
-
-try {
-    client.connect()
-} catch (err) {
-    console.log(`DB connection failed ${err}`)
-}
