@@ -1,7 +1,7 @@
 export const registerServiceWorker = async () => {
   try {
     const registration = await navigator.serviceWorker.register(
-      "./js/serviceWorker.js"
+      "/serviceWorker.js"
     );
     console.log('Service worker registered')
     return registration;

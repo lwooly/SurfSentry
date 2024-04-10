@@ -1,5 +1,7 @@
 import express from "express";
+import cors from "cors"
 import webpush from "web-push";
+
 
 //hardcode database - todo - add SQL db
 const subDatabase = []
@@ -12,9 +14,10 @@ webpush.setVapidDetails(
   );
 
 export default function(app) {
+    app.use(cors())
     app.use(express.json())
     app.use(express.static('public'))
-    
+
 
     // could put this in a seperate file? - subscription from service worker saved.
     app.post('/save-subscription', (req, res) => {
@@ -27,7 +30,11 @@ export default function(app) {
     // this get request fires the notification - could be another way CRON etc.
     app.get('/send-notification', (req, res) => {
         // webpush to send notification to subscribers saved in database
-        webpush.sendNotification(subDatabase[0], 'go surfing')
-        res.json({status: 'success', message: "message sent to web push"})
+        try {
+            webpush.sendNotification(subDatabase[0], 'go surfing')
+            res.json({status: 'success', message: "message sent to web push"})
+        } catch (error) {
+            console.log(`Notification not sent: ${error}`)
+        }
     })
 }

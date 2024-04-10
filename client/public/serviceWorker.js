@@ -21,7 +21,8 @@ const PUBLIC_KEY = 'BL7DJwC2j2_vWeEsFiaQktqFnBPg431VKl0Ayhi4T12a-zYR8XGREE_TNHhn
 // subscribe to webpush subscription - push subscription to backend api database
 const saveSubscription = async (subscription) => {
     try {
-        const response = await fetch('http://localhost:3000/save-subscription', {
+        //TODO: dont hardcode fetch url
+        const response = await fetch('http://localhost:8080/save-subscription', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(subscription)
