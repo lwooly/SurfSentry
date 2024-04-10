@@ -1,13 +1,20 @@
 //mock DB for now
-const subDatabase = []
+// const subDatabase = []
 
-export function getSWSubscriptionsFromDB() {
-    console.log(subDatabase)
-    return subDatabase // only one while testing
+import * as db from "../../../db/index.js"
+
+console.log(db)
+
+export async function getSWSubscriptionsFromDB() {
+    const subscriptions = await  db.query('SELECT * FROM subscriptions;')
+    console.log(subscriptions)
+    return subscriptions
 }
 
-export function addSWSubscriptionToDB(subscription) {
-    subDatabase.push(subscription)
-    console.log(subDatabase[0])
-    return subDatabase
+export async function addSWSubscriptionToDB(subscription) {
+    const queryText = 'INSERT INTO subscriptions (data) VALUES ($1) RETURNING *;';
+    const values = [subscription];
+
+    const result = await db.query(queryText, values)
+    return result
 }

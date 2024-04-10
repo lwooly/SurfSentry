@@ -2,10 +2,15 @@ import pg from 'pg'
 const { Pool } = pg
  
 const pool = new Pool({
-  host: 'localhost',
-  user: 'lloydwoolacott',
-  database: 'surfscrape',
-  max: 20,
-  idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 2000,
-})
+    user: 'lloydwoolacott',
+    host: 'localhost',
+    database: 'surfscrape',
+    password:'lwoolydev',
+    port: 5432,
+  })
+
+  if (pool) {
+    console.log('Database connected')
+  }
+
+  export const query = (text, params) => pool.query(text, params)
