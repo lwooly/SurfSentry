@@ -4,7 +4,7 @@ import { getSWSubscriptionsFromDB } from "../SWsubscriptions/queries.js";
 export async function sendPushNotification(req, res) {
   // webpush to send notification to subscribers saved in database
   // Send notification
-//   try {
+  try {
     //get subscribers from DB
     const subscriptions = await getSWSubscriptionsFromDB();
 
@@ -30,8 +30,8 @@ export async function sendPushNotification(req, res) {
       message:
         "Attempted to send messages to all previous web push subscribers",
     });
-//   } catch (error) {
-//     console.log(`Notification not sent: ${error}`);
-//     res.status(500).json({ status: "error", message: "Internal server error" });
-//   }
+  } catch (error) {
+    console.log(`Notification not sent: ${error}`);
+    res.status(500).json({ status: "error", message: "Internal server error" });
+  }
 }
