@@ -14,7 +14,6 @@ export async function sendWebpushNotification(subscription, message) {
   if (!subscription || !subscription.endpoint) {
     throw new Error('Invalid subscription')
   }
-
     const res = await webpush.sendNotification(subscription, message);
     return res
 }

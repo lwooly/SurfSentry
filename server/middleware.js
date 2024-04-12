@@ -9,7 +9,7 @@ export default function(app) {
     app.use(express.json())
     app.use(express.static('public'))
 
-
+// Routes
     // save service worker subscription
     app.post('/save-subscription', addSWSubscription)
 

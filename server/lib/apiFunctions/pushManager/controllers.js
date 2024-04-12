@@ -17,7 +17,6 @@ export async function sendPushNotification(req, res) {
           console.log(err.statusCode);
           //unsubscribe if 410 status recieved (Gone - expired or unsubscribed)
           if (err.statusCode === 410) {
-
             //TODO - add id to db query and use it to remove db instances for subscriptions that have gone.
             console.log("remove");
           }
