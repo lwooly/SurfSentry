@@ -1,0 +1,19 @@
+.buttonWithArrow {
+    padding: 0.5em;
+    margin: 0.2em;
+
+    border-radius: 0.3em;
+    border: solid 2px black;
+
+    font-size: 1rem;
+
+    color: black;
+    background-color: #fff;
+
+
+    &:hover {
+        filter: invert(1);
+        cursor: pointer;
+    }
+
+}
