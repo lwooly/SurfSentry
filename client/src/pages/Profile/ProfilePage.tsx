@@ -4,6 +4,8 @@ import React from "react";
 export const ProfilePage = () => {
   const { user } = useAuth0();
 
+  console.log(user)
+
   if (!user) {
     return null;
   }

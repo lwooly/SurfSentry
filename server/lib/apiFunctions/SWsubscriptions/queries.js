@@ -9,7 +9,7 @@ export async function getSWSubscriptionsFromDB() {
     return result.rows;
 }
 
-export async function addSWSubscriptionToDB(subscription) {
+export async function addSWSubscriptionToDB({subscription}) {
     const queryText = 'INSERT INTO subscriptions (data) VALUES ($1) RETURNING *;';
     const values = [subscription];
     const result = await db.query(queryText, values)
