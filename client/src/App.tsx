@@ -6,6 +6,7 @@ import Layout from "./components/global/Layout/Layout";
 import Callback from "./pages/Callback/Callback";
 import { useAuth0 } from "@auth0/auth0-react";
 import NotFoundPage from "./pages/NotFound";
+import { ProfilePage } from "./pages/Profile/ProfilePage";
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
           <Route path="/callback" element={<Callback />} />
+          <Route path="/profile" element={<ProfilePage />} />
           <Route path="/" index element={<Home />} />
           <Route path="*" element={<NotFoundPage />} />
           </Route>

@@ -1,5 +1,5 @@
 
-const urlBase64ToUint8Array = base64String => {
+const urlBase64ToUint8Array = (base64String) => {
     const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
     const base64 = (base64String + padding)
         .replace(/\-/g, '+')
@@ -15,17 +15,23 @@ const urlBase64ToUint8Array = base64String => {
     return outputArray;
 }
 
-const PUBLIC_KEY = 'BL7DJwC2j2_vWeEsFiaQktqFnBPg431VKl0Ayhi4T12a-zYR8XGREE_TNHhngD8fdSebqdiVb6mJ6TT4avyJ8Oc'
+let params = new URL(self.location).searchParams;
+const API_URL = params.get('apiUrl');
+const VAPID_PUBLIC_KEY = params.get('vapidPublicKey');
+const userId = params.get('userId');
 
 
 // subscribe to webpush subscription - push subscription to backend api database
-const saveSubscription = async (subscription) => {
+const saveSubscription = async (subscription, userId) => {
     try {
         //TODO: dont hardcode fetch url
-        const response = await fetch('http://localhost:8080/save-subscription', {
+        const response = await fetch(`${API_URL}/save-subscription`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(subscription)
+            body: JSON.stringify({
+                subscription: subscription,
+                userId : userId,
+            })
         })
         const data = await response.json()
         console.log(`Subscription saved: ${data}`)
@@ -37,19 +43,18 @@ const saveSubscription = async (subscription) => {
 }
 
 // register service worker with push manager
-self.addEventListener('activate', async (e) => {
+self.addEventListener('activate', async () => {
     const subscription = await self.registration.pushManager.subscribe({
         userVisibleOnly: true,
-        applicationServerKey: urlBase64ToUint8Array(PUBLIC_KEY)
+        applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY)
     })
     // save subscription to backed
-    const response = await saveSubscription(subscription)
+    const response = await saveSubscription(subscription, userId)
     console.log(response)
 })
 
 // show notification from push manager
 self.addEventListener('push', e => {
     const data = e.data.text()
-    console.log(data)
     self.registration.showNotification('test', {body: data})
 })

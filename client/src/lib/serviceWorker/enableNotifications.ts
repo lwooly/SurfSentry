@@ -2,12 +2,12 @@ import { checkPermission } from "./checkPermission"
 import { registerServiceWorker } from "./registerServiceWorker"
 import { requestNotificationPermission } from "./requestNotificationPermission"
 
-export default async function enableNotifications() {
+export default async function enableNotifications(userId) {
     console.log('subsciption button clicked')
     checkPermission()
     await requestNotificationPermission()
     // buttonVisibility(subscribeBtn)
-    await registerServiceWorker()
+    await registerServiceWorker(userId)
 }
 
  
