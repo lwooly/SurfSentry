@@ -5,14 +5,17 @@ import { sendPushNotification } from "./lib/apiFunctions/pushManager/controllers
 import { auth } from "express-oauth2-jwt-bearer"
 import validateAccessToken from "./middleware/auth0.middleware.js";
 import errorHandler from "./middleware/error.middleware.js";
+import { createUser } from "./lib/apiFunctions/users/controllers.js";
 
 export default function(app) {
     app.use(cors())
     app.use(express.json())
-    
-   //Authorised acces only
+
+    app.post('/api/v1/users/user', createUser)
+
+   //Authorised access only
    app.use(validateAccessToken) // TODO - handle error messages properly
-//    app.use(errorHandler)
+   app.use(errorHandler)
 
 // Routes
     // save service worker subscription
@@ -21,4 +24,6 @@ export default function(app) {
 
     // this get request fires the notification - could be another way CRON etc.
     app.get('/send-notification', sendPushNotification)
+
+
 }

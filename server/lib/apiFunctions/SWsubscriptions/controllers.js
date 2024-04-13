@@ -8,6 +8,9 @@ export async function addSWSubscription(req, res) {
     res.json({status: 'success', message: "Subscription saved"})
     } catch (err) {
         console.log('Subscription not saved', err)
+        const status = 500;
+        const message = "Subscription not saved";
+        res.status(status).json({ message });
     }
     
 }
