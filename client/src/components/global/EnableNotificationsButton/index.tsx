@@ -2,6 +2,7 @@ import enableNotifications from "@src/lib/serviceWorker/enableNotifications";
 import ButtonWithArrow from "../ButtonWithArrow";
 import { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
+import useAccessToken from "@src/hooks/useAccessToken";
 
 const EnableNotificationsButton = () => {
     const [visible, setVisible] = useState<boolean>(true)
@@ -9,10 +10,10 @@ const EnableNotificationsButton = () => {
     const [clicked, setClicked] = useState<boolean>(false)
 
     const {user} = useAuth0()
-
+    const { accessToken } = useAccessToken()
 
     const handleClick = async () => {
-        await enableNotifications(user.sub)
+        await enableNotifications(user.sub, accessToken)
         setClicked(!clicked)
     }
 

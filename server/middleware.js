@@ -10,15 +10,14 @@ export default function(app) {
     app.use(cors())
     app.use(express.json())
     
-    //Authorised acces only
-    app.use(validateAccessToken) // TODO - handle error messages properly
-    app.use(errorHandler)
+   //Authorised acces only
+   app.use(validateAccessToken) // TODO - handle error messages properly
+//    app.use(errorHandler)
 
 // Routes
     // save service worker subscription
     app.post('/save-subscription', addSWSubscription)
-
-
+ 
 
     // this get request fires the notification - could be another way CRON etc.
     app.get('/send-notification', sendPushNotification)

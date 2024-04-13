@@ -13,8 +13,6 @@ const SendNotificationsButton = () => {
 
     const { accessToken } = useAccessToken()
 
-    console.log(accessToken)
-
   return (
     <>
         <ButtonWithArrow handleClick={() => sendNotification(accessToken)}>

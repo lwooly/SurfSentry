@@ -7,7 +7,7 @@ async function sendNotification(accessToken: string) {
     const response = await axios.get(`${API_URL}/send-notification`, {
       headers: { 'Authorization': `Bearer ${accessToken}`},
     });
-    console.log(`${API_URL}/save-subscription`);why
+    console.log(`${API_URL}/save-subscription`);
     console.log(response);
     return response;
   } catch (err) {
