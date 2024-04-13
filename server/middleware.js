@@ -4,7 +4,7 @@ import { addSWSubscription } from "./lib/apiFunctions/SWsubscriptions/controller
 import { sendPushNotification } from "./lib/apiFunctions/pushManager/controllers.js";
 import { auth } from "express-oauth2-jwt-bearer"
 import validateAccessToken from "./middleware/auth0.middleware.js";
-
+import errorHandler from "./middleware/error.middleware.js";
 
 export default function(app) {
     app.use(cors())
@@ -12,6 +12,7 @@ export default function(app) {
     
     //Authorised acces only
     app.use(validateAccessToken) // TODO - handle error messages properly
+    app.use(errorHandler)
 
 // Routes
     // save service worker subscription
