@@ -19,7 +19,7 @@ const Home = () => {
           <EnableNotificationsButton />
           <SendNotificationsButton />
           <SelectForecast />
-          {/* <Forecasts /> */}
+          <Forecasts />
         </>
       )}
     </div>

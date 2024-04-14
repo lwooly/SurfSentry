@@ -3,7 +3,7 @@ import { getSurfSpots, subscribeUserToSpot } from "../lib/apiFunctions/surfSpots
 
 const router = new Router();
 
-router.get("/", getSurfSpots);
+router.get("/:userId?", getSurfSpots);
 router.post('/:spotId/subscribe', subscribeUserToSpot)
 
 export default router;

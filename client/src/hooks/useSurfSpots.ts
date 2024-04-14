@@ -1,7 +1,8 @@
 import { getSurfSpots } from "@src/api/spots";
 import { useEffect, useState } from "react";
 
-const useSurfSpots = (accessToken: string | null) => {
+//gets all surf spots. If user id is provided gets user subscribed spots.
+const useSurfSpots = ({accessToken, userId}) => {
 
   const [surfspots, setSurfspots] = useState([]);
 
@@ -10,7 +11,7 @@ const useSurfSpots = (accessToken: string | null) => {
         if (!accessToken) return
         
       try {
-        const res = await getSurfSpots(accessToken);
+        const res = await getSurfSpots({accessToken, userId});
         setSurfspots(res.data);
         console.log("surfspots fetched");
       } catch (err) {

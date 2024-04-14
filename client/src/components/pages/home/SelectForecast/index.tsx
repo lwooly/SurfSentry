@@ -9,7 +9,9 @@ const SelectForecast = () => {
   const { accessToken } = useAccessToken();
   const {user} = useAuth0()
 
-  const surfspots = useSurfSpots( accessToken);
+  const surfspots = useSurfSpots({ accessToken });
+
+  console.log(surfspots)
 
   const monitorNewForecast = async (e) => {
     e.preventDefault()
@@ -21,16 +23,18 @@ const SelectForecast = () => {
       console.log("Failed to subscribe user to spot forecast");
     }
     
-
   }
 
+  console.log(surfspots)
 
   return (
     <form onSubmit={monitorNewForecast}>
       <select name="surfspots">
-        {surfspots.map((spot) => (
-          <option key={spot.surfline_id} value={spot.surfline_id}>{spot.name}</option>
-        ))}
+        {surfspots.map(({surfline_id, spotname}) => {
+          return(
+          <option key={surfline_id} value={surfline_id}>{spotname}</option>
+        )
+      })}
       </select>
       <button type="submit">
         Monitor forecast

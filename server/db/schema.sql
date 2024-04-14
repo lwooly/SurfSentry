@@ -24,7 +24,7 @@ CREATE TABLE
 CREATE TABLE
     spots (
         surfline_id VARCHAR(300) PRIMARY KEY,
-        name TEXT NOT NULL
+        spotname TEXT NOT NULL
     );
 
 CREATE TABLE
