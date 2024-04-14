@@ -1,4 +1,16 @@
 
+// export const getUser = (req, res) => {
+//     try {
+//         //check if user id is provided
+//         const {id} = req.params
+
+//         // if id provided return user
+//         if(id) {
+//             const user = getUserFromDB()
+//         }
+//     }
+// }
+
 export const createUser = (req, res) => {
     try {
         const user = req.body.user
