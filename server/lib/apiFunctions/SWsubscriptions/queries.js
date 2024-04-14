@@ -1,5 +1,3 @@
-//mock DB for now
-// const subDatabase = []
 
 import * as db from "../../../db/index.js"
 

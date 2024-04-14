@@ -3,7 +3,7 @@ import { createUser } from "../lib/apiFunctions/users/controllers.js";
 
 const router = new Router();
 
-export default router;
-
-router.get('/:id', getUsers)
+// router.get('/:id', getUsers)
 router.post('/', createUser)
+
+export default router;

@@ -18,10 +18,4 @@ export default function(app) {
 
     // Routes
     mountRoutes(app)
-
-
-
-
-    
-
 }

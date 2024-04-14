@@ -51,7 +51,6 @@ self.addEventListener("activate", async () => {
     applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY),
   });
   // save subscription to backed
-  console.log(accessToken)
   const response = await saveSubscription(subscription, userId, accessToken);
   console.log(response);
 });
