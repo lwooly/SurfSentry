@@ -12,9 +12,9 @@ export default function(app) {
     app.use(cors())
     app.use(express.json())
 
-   //Authorised access only
-   app.use(validateAccessToken) // TODO - handle error messages properly
-   app.use(errorHandler)
+//    //Authorised access only
+//    app.use(validateAccessToken) // TODO - handle error messages properly
+//    app.use(errorHandler)
 
     // Routes
     mountRoutes(app)

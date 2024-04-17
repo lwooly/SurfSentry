@@ -1,0 +1,13 @@
+services:
+  app:
+    container_name: surfscrape-api
+    build: .
+    restart: always
+    ports: 
+      - "8080:8080"
+    expose:
+      - "8080"
+    command: npm run dev
+
+    volumes:
+      - .:/usr/src/app
