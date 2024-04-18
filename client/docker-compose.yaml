@@ -1,14 +1,14 @@
 services:
-  api:
-    container_name: surfscrape-api
+  app:
+    container_name: surfscrape-app
     build: .
     restart: always
     ports: 
-      - "8080:8080"
+      - "5173:5173"
     expose:
-      - "8080"
+      - "5173"
     command: pnpm dev
 
     volumes:
-      - ./:/src/usr/app
+      - .:/src/usr/app
       - /src/usr/app/node_modules

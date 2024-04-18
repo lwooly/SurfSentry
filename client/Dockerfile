@@ -5,12 +5,13 @@ WORKDIR /src/usr/app
 # # Install pnpm
 RUN npm install -g pnpm
 
-COPY ./package.json pnpm-lock.yaml ./
+COPY ./package.json ./
 
+# Install project dependencies
 RUN pnpm i
 
 COPY . .
 
-EXPOSE 8080
+EXPOSE 5173
 
-CMD ["pnpm",  "dev"]
+CMD ["pnpm", "dev"]
