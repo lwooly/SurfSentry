@@ -1,6 +1,8 @@
 import fetchSurflineForecast from "./services/fetchSurflineForecast.js"
 import checkForecast from "./utils/checkForecast.js"
 
+
+console.log('running')
 // hardcode spotId during development
 const spotIds = [{name: 'Rest Bay', spotId:"584204204e65fad6a77090d2"}]
 
