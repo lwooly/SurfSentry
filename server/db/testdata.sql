@@ -7,4 +7,11 @@ INSERT INTO spots (spotname, surfline_id) VALUES
 SELECT spotname FROM ((user_spots
 INNER JOIN spots ON user_spots.spot_id=spots.surfline_id)
 INNER JOIN users ON user_spots.user_id=users.auth0_user_id)
-WHERE auth0_user_id='google-oauth2|114388185724420';
+WHERE auth0_user_id='google-oauth2|114388185724420054893';
+
+SELECT * FROM 
+(spots  LEFT JOIN user_spots ON spots.surfline_id=user_spots.spot_id)
+WHERE surfline_id NOT IN 
+    (SELECT surfline_id FROM 
+    spots  INNER JOIN user_spots ON spots.surfline_id=user_spots.spot_id 
+    WHERE user_id = 'google-oauth2|114388185724420054893');

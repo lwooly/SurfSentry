@@ -9,7 +9,7 @@ const SelectForecast = () => {
   const { accessToken } = useAccessToken();
   const {user} = useAuth0()
 
-  const surfspots = useSurfSpots({ accessToken });
+  const surfspots = useSurfSpots({ accessToken, userId: user.sub, isUserExcluded: true});
 
   console.log(surfspots)
 
