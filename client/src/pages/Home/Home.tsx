@@ -8,9 +8,21 @@ import SendNotificationsButton from "@src/components/global/SendNotificationsBut
 import Forecasts from "@src/components/pages/home/Forecasts/Forecasts";
 import { Link } from "react-router-dom";
 import SelectForecast from "@src/components/pages/home/SelectForecast";
+import useSurfSpots from "@src/hooks/useSurfSpots";
+import fetchCreateUser from "@src/api/users";
+import useAccessToken from "@src/hooks/useAccessToken";
 
 const Home = () => {
-  const { isAuthenticated } = useAuth0();
+  const { isAuthenticated, user } = useAuth0();
+
+  const surfSpotsData = useSurfSpots({ userId: user?.sub });
+
+  const { accessToken } = useAccessToken();
+
+          // //create user if doesn't exist already.
+          // if (isAuthenticated && user && accessToken) {
+          // fetchCreateUser({user, accessToken})
+          // }
 
   return (
     <div>
@@ -18,8 +30,8 @@ const Home = () => {
         <>
           <EnableNotificationsButton />
           <SendNotificationsButton />
-          <SelectForecast />
-          <Forecasts />
+          <SelectForecast surfSpotsData={surfSpotsData} />
+          <Forecasts surfSpotsData={surfSpotsData} />
         </>
       )}
     </div>

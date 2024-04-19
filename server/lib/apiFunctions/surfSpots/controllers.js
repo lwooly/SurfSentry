@@ -1,20 +1,19 @@
-import { getSurfSpotsFromDB, getUserSurfSpotsFromDB, subscribeUserToSpotInDB, unSubscribeUserToSpotInDB } from "./queries.js";
+import { getNonUserSurfSpotsFromDB, getSpotsAndSubscriptionsFromDB, getSurfSpotsFromDB, getUserSurfSpotsFromDB, subscribeUserToSpotInDB, unSubscribeUserToSpotInDB } from "./queries.js";
 
 export const getSurfSpots = async (req, res) => {
   const { userId } = req.params;
 
   try {
     let spots;
+    
     if (userId) {
-      spots = await getUserSurfSpotsFromDB(userId);
+      spots = await getSpotsAndSubscriptionsFromDB(userId)
     } else {
       spots = await getSurfSpotsFromDB();
     }
-
-    console.log(spots);
     res.status(200).json(spots);
   } catch (err) {
-    console.error("Error fetching surf spots:");
+    console.error("Error fetching surf spots:", err);
     res.status(500).json({ error: "Internal server error" });
   }
 };
