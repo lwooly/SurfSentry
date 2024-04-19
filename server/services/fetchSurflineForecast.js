@@ -7,10 +7,10 @@ const fetchSurflineForecast = async (spotId) => {
     try {
         const response = await axios.get(forecastEndpoint)
         // return condition forecast only
-        console.log(response.data.data.conditions)
+        // console.log(response.data.data.conditions)
         return response.data.data.conditions
     } catch (error) {
-        console.error(error)
+        throw error
     }
 }
 

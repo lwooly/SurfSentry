@@ -1,7 +1,7 @@
 import * as db from "../../../db/index.js";
 
 export const getSurfSpotsFromDB = async () => {
-  const text = "SELECT * FROM spots";
+  const text = `SELECT * FROM spots;`
   const data = await db.query(text);
   return data.rows;
 };

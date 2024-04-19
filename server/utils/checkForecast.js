@@ -5,7 +5,7 @@ const checkForecast = (forecastArr) => {
   // limit to 3 days TODO
   forecastArr.forEach((forecast, index) => {
     // check am forecast
-    if (forecast.am.rating === "FAIR" || forecast.am.rating === "GOOD" || forecast.am.rating === "EPIC") {
+    if (forecast.am.rating === "POOR" || forecast.am.rating === "FAIR" || forecast.am.rating === "GOOD" || forecast.am.rating === "EPIC") {
       goodForecasts.push(forecast);
     }
     // TODO: Check pm forecasts

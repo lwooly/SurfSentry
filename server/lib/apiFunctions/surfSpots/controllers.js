@@ -2,7 +2,7 @@ import { getNonUserSurfSpotsFromDB, getSpotsAndSubscriptionsFromDB, getSurfSpots
 
 export const getSurfSpots = async (req, res) => {
   const { userId } = req.params;
-
+  
   try {
     let spots;
     

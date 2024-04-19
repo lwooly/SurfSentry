@@ -1,34 +1,34 @@
-import fetchSurflineForecast from "./services/fetchSurflineForecast.js"
-import checkForecast from "./utils/checkForecast.js"
+import { getSurfSpotsFromDB } from "./lib/apiFunctions/surfSpots/queries.js";
+import fetchSurflineForecast from "./services/fetchSurflineForecast.js";
+import checkForecast from "./utils/checkForecast.js";
 
+// check surfline forecast for each spot and save
+export const surfCheck = async () => {
+    let spots = []
+try {
+    spots = await getSurfSpotsFromDB();
+} catch (err) {
+    console.log('Internal server error', err)
+}
 
-console.log('running')
-// hardcode spotId during development
-const spotIds = [{name: 'Rest Bay', spotId:"584204204e65fad6a77090d2"}]
+  spots.forEach(async ({ spotname, surfline_id }) => {
+    try {
+      const forecast = await fetchSurflineForecast(surfline_id);
 
-//hardcode array of good forecasts - this can be in db
-const goodForecasts = []
+      //add spot name to forecast objects for simple reference
+      forecast.map((items) => {
+        items.spotname = spotname;
+        return items;
+      });
 
-// check surfline forecast for each spot and save 
-const surfCheck = (spotIds) => {
-    spotIds.forEach(async ({name, spotId}) => {
-        const forecast = await fetchSurflineForecast(spotId)
+      //check spot forecast data for any good or epic ratings and return these only
+      const goodForecast = checkForecast(forecast);
 
-        //check spot forecast data for any good or epic ratings and return these
-        const forecasts = checkForecast(forecast)
-
-        //add spot name to forecast objects for reference
-        const namedForecasts = forecasts.map(forecast => {
-            forecast.name = name;
-            return forecast
-        })
-
-       // send a notification to user if any good forecasts
-        if (namedForecasts.length) {
-            console.log('send a notification')
-        }
-
-        
-})}
-
-surfCheck(spotIds)
+      if (goodForecast.length > 0) {
+        console.log("Notify users of good forecast at", spotname);
+      }
+    } catch (error) {
+      console.log("Could not fetch surfline forecast:", error);
+    }
+  });
+};

@@ -1,4 +1,5 @@
 import { sendWebpushNotification } from "../../../services/webpush/index.js";
+import { surfCheck } from "../../../surfCheck.js";
 import { getSWSubscriptionsFromDB } from "../SWsubscriptions/queries.js";
 
 export async function sendPushNotification(req, res) {
@@ -32,5 +33,14 @@ export async function sendPushNotification(req, res) {
   } catch (error) {
     console.log(`Notification not sent: ${error}`);
     res.status(500).json({ status: "error", message: "Internal server error" });
+  }
+}
+
+
+export const startSurfCheck = (req, res) => {
+  try {
+    surfCheck()
+  } catch (err) {
+    console.log(err)
   }
 }
