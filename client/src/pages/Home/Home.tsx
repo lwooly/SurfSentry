@@ -17,13 +17,6 @@ const Home = () => {
 
   const surfSpotsData = useSurfSpots({ userId: user?.sub });
 
-  const { accessToken } = useAccessToken();
-
-          // //create user if doesn't exist already.
-          // if (isAuthenticated && user && accessToken) {
-          // fetchCreateUser({user, accessToken})
-          // }
-
   return (
     <div>
       {isAuthenticated && (

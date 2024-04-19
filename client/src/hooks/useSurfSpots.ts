@@ -11,7 +11,7 @@ interface SurfSpot {
 export interface UseSurfSpotsReturn {
   isLoading: boolean;
   isServerError: boolean;
-  surfSpots: SurfSpot[] | null;
+  surfSpots: SurfSpot[] | undefined;
   refetch: () => void;
 }
 //gets all surf spots. If user id is provided gets user subscribed spots.

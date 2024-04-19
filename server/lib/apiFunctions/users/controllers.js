@@ -13,12 +13,12 @@ import { addUserToDB } from "./queries.js";
 
 export const createUser = async (req, res) => {
   try {
-    const user = req.body;
-    await addUserToDB(user);
+    const data = req.body;
+    await addUserToDB(data.user);
     console.log("user added to db");
     res.status(200).json("Success: User added to database");
   } catch (error) {
-    console.log("error code", error.code);
+    console.log("User could not be added to db: error code", error.code, error.detail);
     if (error.code === "23505") {
       res.status(409).json({ error: "User already exists. Please login or use a different email." });
     } else {
