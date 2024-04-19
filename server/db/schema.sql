@@ -9,16 +9,9 @@ CREATE TABLE
 CREATE TABLE
     subscriptions (
         id SERIAL PRIMARY KEY,
-        data JSONB NOT NULL
-    );
-
-CREATE TABLE
-    user_subscriptions (
+        data JSONB NOT NULL,
         user_id TEXT NOT NULL,
-        subscription_id INT NOT NULL,
-        PRIMARY KEY (user_id, subscription_id),
-        FOREIGN KEY (user_id) REFERENCES Users (auth0_user_id),
-        FOREIGN KEY (subscription_id) REFERENCES subscriptions (id)
+        FOREIGN KEY (user_id) REFERENCES users (auth0_user_id)
     );
 
 CREATE TABLE

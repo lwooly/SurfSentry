@@ -30,3 +30,9 @@ FROM
 LEFT JOIN 
     user_spots ON spots.surfline_id = user_spots.spot_id
                AND user_spots.user_id = 'google-oauth2|114388185724420054893';
+
+
+SELECT data FROM (
+(spots  LEFT JOIN user_spots ON spots.surfline_id=user_spots.spot_id) 
+JOIN subscriptions ON user_spots.user_id=subscriptions.user_id)
+ WHERE surfline_id = ANY(ARRAY)

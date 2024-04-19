@@ -2,9 +2,9 @@ import axios from "axios";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-async function sendNotification(accessToken: string) {
+async function startSurfCheck(accessToken: string) {
   try {
-    const response = await axios.get(`${API_URL}/send-notification`, {
+    const response = await axios.get(`${API_URL}/send-notification/surf-check`, {
       headers: { 'Authorization': `Bearer ${accessToken}`},
     });
     return response;
@@ -13,4 +13,4 @@ async function sendNotification(accessToken: string) {
   }
 }
 
-export default sendNotification;
+export default startSurfCheck;

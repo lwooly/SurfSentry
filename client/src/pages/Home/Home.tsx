@@ -11,11 +11,15 @@ import SelectForecast from "@src/components/pages/home/SelectForecast";
 import useSurfSpots from "@src/hooks/useSurfSpots";
 import fetchCreateUser from "@src/api/users";
 import useAccessToken from "@src/hooks/useAccessToken";
+import startSurfCheck from "@src/api/pushManager/startSurfCheck";
 
 const Home = () => {
   const { isAuthenticated, user } = useAuth0();
 
   const surfSpotsData = useSurfSpots({ userId: user?.sub });
+
+
+  const {accessToken } = useAccessToken;
 
   return (
     <div>
@@ -25,6 +29,12 @@ const Home = () => {
           <SendNotificationsButton />
           <SelectForecast surfSpotsData={surfSpotsData} />
           <Forecasts surfSpotsData={surfSpotsData} />
+
+          <button onClick={() => {
+            console.log('clicked')
+            startSurfCheck(accessToken)
+          }
+          }>Surfcheck</button>
         </>
       )}
     </div>

@@ -1,4 +1,6 @@
 import { sendWebpushNotification } from "../../../services/webpush/index.js";
+import { surfCheck } from "../../../tasks/surfCheck.js";
+import { sendNotifications } from "../../../utils/notificationFns/sendNotifications.js";
 import { getSWSubscriptionsFromDB } from "../SWsubscriptions/queries.js";
 
 export async function sendPushNotification(req, res) {
@@ -8,21 +10,9 @@ export async function sendPushNotification(req, res) {
     //get subscribers from DB
     const subscriptions = await getSWSubscriptionsFromDB();
 
-    //Send notification
-    await Promise.all(
-      subscriptions.map(async ({ data: subscription }) => {
-        try {
-          await sendWebpushNotification(subscription, "testing message");
-        } catch (err) { // manage error from unsubcribed here
-          console.log(err.statusCode);
-          //unsubscribe if 410 status recieved (Gone - expired or unsubscribed)
-          if (err.statusCode === 410) {
-            //TODO - add id to db query and use it to remove db instances for subscriptions that have gone.
-            console.log("remove");
-          }
-        }
-      })
-    );
+    console.log('subscirptions', subscriptions)
+
+    await sendNotifications(subscriptions)
     //Send success response
     res.json({
       status: "success",
@@ -32,5 +22,14 @@ export async function sendPushNotification(req, res) {
   } catch (error) {
     console.log(`Notification not sent: ${error}`);
     res.status(500).json({ status: "error", message: "Internal server error" });
+  }
+}
+
+
+export const startSurfCheck = (req, res) => {
+  try {
+    surfCheck()
+  } catch (err) {
+    console.log(err)
   }
 }
