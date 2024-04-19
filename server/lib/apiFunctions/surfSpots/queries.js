@@ -15,13 +15,28 @@ export const getUserSurfSpotsFromDB = async (userId) => {
   return data.rows;
 };
 
+export const getSpotsAndSubscriptionsFromDB = async (userId) => {
+
+  const text = `SELECT
+                  spots.surfline_id,
+                  spots.spotname,
+                  user_spots.user_id
+                  FROM 
+                    spots 
+                  LEFT JOIN 
+                    user_spots ON spots.surfline_id = user_spots.spot_id
+                              AND user_spots.user_id = '${userId}';`;
+  const data = await db.query(text);
+  return data.rows;
+};
+
 // surf spots not selected by user
 export const getNonUserSurfSpotsFromDB = async (userId) => {
-  const text = `SELECT * FROM 
+  const text = `SELECT * FROM
         (spots  LEFT JOIN user_spots ON spots.surfline_id=user_spots.spot_id)
-        WHERE surfline_id NOT IN 
-            (SELECT surfline_id FROM 
-            spots  INNER JOIN user_spots ON spots.surfline_id=user_spots.spot_id 
+        WHERE surfline_id NOT IN
+            (SELECT surfline_id FROM
+            spots  INNER JOIN user_spots ON spots.surfline_id=user_spots.spot_id
             WHERE user_id = '${userId}');`;
   const data = await db.query(text);
   return data.rows;

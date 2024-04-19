@@ -1,17 +1,18 @@
 import axios from "axios";
 
-export const getSurfSpots = async ({
+interface surfSpotConfig {
+  accessToken:string;
+  userId?:string;
+}
+
+export const getSurfSpots= async ({
   accessToken,
   userId = "",
-  isUserExcluded = false,
-}) => {
-  // if a user id is present fetch only user subcribed spots or all surf spots if no user.
-
-  const url = isUserExcluded
-    ? `${
-        import.meta.env.VITE_API_URL
-      }/surf-spots/${userId}?isUserExcluded=${isUserExcluded}`
-    : `${import.meta.env.VITE_API_URL}/surf-spots/${userId}`;
+}:surfSpotConfig) => {
+  console.log(userId)
+  // Fetch all surfspots
+  // If a user id is present fetch data for user subscription
+  const url =`${import.meta.env.VITE_API_URL}/surf-spots/${userId}`;
 
   const res = await axios.get(url, {
     headers: {
@@ -39,8 +40,6 @@ export const unSubscribeUserToSpot = async ({
   userId,
   accessToken,
 }) => {
-  console.log(spotId);
-  console.log(userId);
   const res = await axios.delete(
     `${import.meta.env.VITE_API_URL}/surf-spots/${spotId}/subscribe/${userId}`,
     {

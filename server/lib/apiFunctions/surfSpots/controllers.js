@@ -1,18 +1,13 @@
-import { getNonUserSurfSpotsFromDB, getSurfSpotsFromDB, getUserSurfSpotsFromDB, subscribeUserToSpotInDB, unSubscribeUserToSpotInDB } from "./queries.js";
+import { getNonUserSurfSpotsFromDB, getSpotsAndSubscriptionsFromDB, getSurfSpotsFromDB, getUserSurfSpotsFromDB, subscribeUserToSpotInDB, unSubscribeUserToSpotInDB } from "./queries.js";
 
 export const getSurfSpots = async (req, res) => {
   const { userId } = req.params;
-  const isUserExcluded = req.query.isUserExcluded === 'true'
 
   try {
     let spots;
     
     if (userId) {
-      if (isUserExcluded) {
-        spots = await getNonUserSurfSpotsFromDB(userId);
-      } else {
-        spots = await getUserSurfSpotsFromDB(userId);
-      }
+      spots = await getSpotsAndSubscriptionsFromDB(userId)
     } else {
       spots = await getSurfSpotsFromDB();
     }
