@@ -1,5 +1,5 @@
 import { sendWebpushNotification } from "../../../services/webpush/index.js";
-import { surfCheck } from "../../../surfCheck.js";
+import { surfCheck } from "../../../tasks/surfCheck.js";
 import { sendNotifications } from "../../../utils/notificationFns/sendNotifications.js";
 import { getSWSubscriptionsFromDB } from "../SWsubscriptions/queries.js";
 
