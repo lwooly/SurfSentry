@@ -1,55 +1,75 @@
 import axios from "axios";
 import { JSDOM, VirtualConsole } from "jsdom";
+import { getUserAgent } from "./config/userAgents.js";
+import { getRandomInt } from "../../utils/getRandomInt.js";
+import { getDisallowedPaths } from "./robotsParser/index.js";
+import { checkPathAllowed } from "./checkPathAllowed.js";
 
-const scrapeForLinks = async () => {
-  const websiteLinks = new Set();
+const scrapeForLinks = async (TARGET_URL) => {
+  console.log("Scraping....");
 
-  // url of website to scrape
-  const scrape = async (targetUrl) => {
-    // create url
-    const url = new URL(targetUrl);
+  const MASTER_URL = new URL(TARGET_URL);
+  const ORIGIN = MASTER_URL.origin;
+  const HOSTNAME = MASTER_URL.hostname;
 
-    // if link has not been scraped already - scrape
-    if (!websiteLinks.has(url.href)) {
-      // add link to websiteLinks so not scraped again
-      websiteLinks.add(url.href);
+  const URLS = new Set()
+  // save new calls so can wait for them to finish before ending
+  const promises = [];
 
-      try {
-        //get page
-        const res = await axios.get(url.href);
+  // scrape function
+  const scrape = async (url) => {
+    //create js DOM virtual console to filter console output
+    // Create a custom virtual console
+    const virtualConsole = new VirtualConsole();
+    // check and register url
+    if (URLS.has(url)) {
+      return; //visited previously skip
+    }
+    // add link to URLS so not scraped again - TBC whether I want to include links that are not to be scraped. 
+    URLS.add(url);
+    console.log('Scraping', url)
 
-        // Create a custom virtual console
-        const virtualConsole = new VirtualConsole();
+    //check if useragent is allowed to scrape this path
+    if (!checkPathAllowed(url, ORIGIN)) {
+        return // scrape of this url not allowed
+    }
 
-        //use jsdom to get all links from page
-        const dom = new JSDOM(res.data, { virtualConsole });
-        const { document } = dom.window;
-        const links = document.querySelectorAll("a");
+    try {
+      //get page
+      const res = await axios.get(url, {
+        headers: {
+          "User-Agent": getUserAgent(),
+          Referer: "https://www.google.com",
+        },
+      });
 
-        // iterate through all links found
-        links.forEach((link) => {
-          const { href } = link;
+      //use jsdom to get all links from page
+      const dom = new JSDOM(res.data, { virtualConsole });
+      const { document } = dom.window;
+      const links = document.querySelectorAll("a");
 
-          // Check if the link is from the same site
-          const isSiteLink =
-            href.startsWith("/") || href.startsWith(url.origin);
-          if (isSiteLink) {
-            const fullUrl = href.startsWith(url.origin)
-              ? href
-              : url.origin + href; // add origin to href
-            scrape(fullUrl); // Recursively scrape site links
-            console.log("Link scraped:", fullUrl);
-          }
-        });
-      } catch (err) {
-        console.log("Link not scraped", url.href, err.code);
+      // iterate through all links found
+      for (const link of links) {
+        const { href } = link;
+
+        // Check if the link is from the same site
+        const isSiteLink = href.startsWith("/") || href.startsWith(ORIGIN);
+        if (isSiteLink) {
+          const fullUrl = href.startsWith(ORIGIN) ? href : ORIGIN + href; // add origin to href
+          // Asynchronously manage scraping to avoid too many concurrent processes
+          promises.push(await scrape(fullUrl))
+        }
       }
+    } catch (err) {
+      console.log("Link not scraped", url, err.code);
     }
   };
 
-  await scrape("https://www.thejump.tech");
+  await scrape(TARGET_URL);
+  await Promise.all(promises)
 
-  console.log('/n /n /n /n Links found:', websiteLinks.values());
+  console.log('Scraping complete')
+  console.log(URLS)
 };
 
-scrapeForLinks()
+scrapeForLinks("https://www.scrapethissite.com/");
