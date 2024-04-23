@@ -1,9 +1,9 @@
-import axios from "axios";
+import axios, { all } from "axios";
 import { JSDOM, VirtualConsole } from "jsdom";
 import { getUserAgent } from "./config/userAgents.js";
 import { getRandomInt } from "../../utils/getRandomInt.js";
-import { getDisallowedPaths } from "./robotsParser/index.js";
-import { checkPathAllowed } from "./checkPathAllowed.js";
+import { canScrape } from "./robotsParser/index.js";
+import async from "async";
 
 const scrapeForLinks = async (TARGET_URL) => {
   console.log("Scraping....");
@@ -12,27 +12,45 @@ const scrapeForLinks = async (TARGET_URL) => {
   const ORIGIN = MASTER_URL.origin;
   const HOSTNAME = MASTER_URL.hostname;
 
-  const URLS = new Set()
-  // save new calls so can wait for them to finish before ending
-  const promises = [];
+  const URLS = new Set();
+  const DISALLOWED_URLS = new Set();
+
+  // Using async.queue to manage concurrency
+  const queue = async.queue(async (task, done) => {
+    await scrape(task.url);
+    setTimeout(done, 2000)
+  }, 2); // Concurrency level is 5, adjust as necessary
+
+  queue.drain(() => {
+    console.log("Scraping complete");
+    console.log(URLS);
+  });
+
+  // Start scraping from the target URL
+  queue.push({ url: TARGET_URL });
 
   // scrape function
   const scrape = async (url) => {
-    //create js DOM virtual console to filter console output
-    // Create a custom virtual console
-    const virtualConsole = new VirtualConsole();
     // check and register url
-    if (URLS.has(url)) {
+    if (URLS.has(url) || DISALLOWED_URLS.has(url)) {
       return; //visited previously skip
     }
-    // add link to URLS so not scraped again - TBC whether I want to include links that are not to be scraped. 
-    URLS.add(url);
-    console.log('Scraping', url)
+
+    //delay
+
+    await new Promise(resolve => setTimeout(resolve, 2* 1000 + getRandomInt(30) * 1000))
 
     //check if useragent is allowed to scrape this path
-    if (!checkPathAllowed(url, ORIGIN)) {
-        return // scrape of this url not allowed
+    const isAllowed = await canScrape(url);
+    if (!isAllowed) {
+      console.log("not allowed to scrape:", url);
+      DISALLOWED_URLS.add(url);
+      return; // scrape of this url not allowed
     }
+
+    // add link to URLS so not scraped again
+    URLS.add(url);
+    console.log('Scraped:', url)
 
     try {
       //get page
@@ -44,7 +62,8 @@ const scrapeForLinks = async (TARGET_URL) => {
       });
 
       //use jsdom to get all links from page
-      const dom = new JSDOM(res.data, { virtualConsole });
+      //create js DOM virtual console to filter console output
+      const dom = new JSDOM(res.data, { virtualConsole: new VirtualConsole() });
       const { document } = dom.window;
       const links = document.querySelectorAll("a");
 
@@ -56,20 +75,15 @@ const scrapeForLinks = async (TARGET_URL) => {
         const isSiteLink = href.startsWith("/") || href.startsWith(ORIGIN);
         if (isSiteLink) {
           const fullUrl = href.startsWith(ORIGIN) ? href : ORIGIN + href; // add origin to href
+
           // Asynchronously manage scraping to avoid too many concurrent processes
-          promises.push(await scrape(fullUrl))
+          queue.push({ url: fullUrl }); // Push new task to the queue
         }
       }
     } catch (err) {
       console.log("Link not scraped", url, err.code);
     }
   };
-
-  await scrape(TARGET_URL);
-  await Promise.all(promises)
-
-  console.log('Scraping complete')
-  console.log(URLS)
 };
 
-scrapeForLinks("https://www.scrapethissite.com/");
+scrapeForLinks("https://www.surfline.com/");

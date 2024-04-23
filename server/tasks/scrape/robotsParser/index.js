@@ -1,30 +1,35 @@
-import robotsParser from "robots-txt-parser";
+import axios from "axios";
+import robotsParser from "robots-parser";
 
-const robots = robotsParser({
-  userAgent: "*",
-  allowOnNeutral: false,
-});
+const cache = {};
 
-let robotsCache;
+export const canScrape = async (url) => {
+  // get robots.txt file
+  const DOMAIN = new URL(url).origin;
+  const robotsUrl = `${DOMAIN}/robots.txt`;
 
+  let robotsTextFile;
 
-export const getDisallowedPaths = async (origin) => {
-
-    if (robotsCache) {
-        return robotsCache;
+  if (cache[robotsUrl]) {
+    robotsTextFile = cache[robotsUrl];
+  } else {
+    console.log('robots.txt not cached. Fetching...')
+    try {
+      // fetch robots.txt file
+      const res = await axios.get(robotsUrl);
+      robotsTextFile =  res.data
+      //cache
+      cache[robotsUrl] = robotsTextFile
+      console.log("Robots.txt fetched");
+    } catch (err) {
+      console.log("Robots.txt not found - check if domain valid");
+      return false; // safely exit, avoiding any unauthorized paths
     }
-  try {
-    // get and cache robots.txt for origin
-    const res = await robots.useRobotsFor(origin);
-   
-
-
-    //check for any useragent
-    const disallowedPaths = res['*'].disallow
-    robotsCache = disallowedPaths;
-    return disallowedPaths
-
-  } catch (err) {
-    console.log("Error fetching or parsing robots.txt:", err);
   }
+
+  const robots = robotsParser(robotsUrl, robotsTextFile)
+
+  const isAllowed = robots.isAllowed(url, '*');
+
+  return isAllowed
 };

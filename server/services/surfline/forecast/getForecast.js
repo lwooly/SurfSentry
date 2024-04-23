@@ -1,5 +1,7 @@
 import axios from "axios";
-import createSurflineEndpoint from "../utils/forecastFns/createSurflineEndpoint.js";
+import createSurflineEndpoint from "./forecastFns/createSurflineEndpoint.js";
+
+//get all spots from surfline
 
 // fetch the surfline forecast
 const fetchSurflineForecast = async (spotId) => {
