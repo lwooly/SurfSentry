@@ -1,5 +1,56 @@
 import * as db from "../../../db/index.js";
 
+export const addSurfSpotToDB = async (spot) => {
+  const {
+    surfline_id,
+    spotRef,
+    category,
+    hasSpots,
+    liesIn,
+    spotLocation,
+    spotname,
+    updatedAt,
+    depth,
+  } = spot;
+
+  const text = `INSERT INTO spots (
+    surfline_id,
+    spotRef,
+    category,
+    hasSpots,
+    liesIn,
+    spotLocation,
+    spotname,
+    updatedAt,
+    depth
+    ) 
+        VALUES (
+            $1, 
+            $2, 
+            $3, 
+            $4, 
+            $5, 
+            $6, 
+            $7, 
+            $8, 
+            $9
+        )`;
+  const values = [
+    surfline_id,
+    spotRef,
+    category,
+    hasSpots,
+    liesIn,
+    spotLocation,
+    spotname,
+    updatedAt,
+    depth,
+  ];
+  const data = await db.query(text, values);
+  return data.rows;
+};
+
+
 export const getSurfSpotsFromDB = async () => {
   const text = `SELECT * FROM spots;`
   const data = await db.query(text);

@@ -17,8 +17,18 @@ CREATE TABLE
 CREATE TABLE
     spots (
         surfline_id VARCHAR(300) PRIMARY KEY,
-        spotname TEXT NOT NULL
+        spotname VARCHAR NOT NULL,
+        spotRef VARCHAR,
+        category VARCHAR,
+        hasSpots BOOLEAN,
+        liesIn VARCHAR NOT NULL,
+        spotLocation JSONB,
+        updatedAt VARCHAR,
+        depth INT
     );
+
+
+
 
 CREATE TABLE
     user_spots (
@@ -27,4 +37,24 @@ CREATE TABLE
         PRIMARY KEY (user_id, spot_id),
         FOREIGN KEY (user_id) REFERENCES users (auth0_user_id),
         FOREIGN KEY (spot_id) REFERENCES spots (surfline_id)
+    );
+
+
+CREATE TABLE 
+    regions (
+        id VARCHAR NOT NULL PRIMARY KEY,
+        regionName VARCHAR NOT NULL,
+        regionType VARCHAR NOT NULL,
+        category VARCHAR,
+        hasSpots BOOLEAN,
+        liesIn VARCHAR NOT NULL,
+        depth INT,
+        updatedAt VARCHAR,
+        latitude VARCHAR,
+        longitude VARCHAR,
+        fcode VARCHAR,
+        fclName VARCHAR,
+        fcodeName VARCHAR,
+        enumeratedPath VARCHAR,
+        subregionId VARCHAR
     );

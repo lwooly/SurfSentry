@@ -1,7 +1,7 @@
 import { getSpotSubscriptionsFromDB } from "../../lib/apiFunctions/SWsubscriptions/queries.js";
 import { getSurfSpotsFromDB } from "../../lib/apiFunctions/surfSpots/queries.js";
-import fetchSurflineForecast from "../../services/fetchSurflineForecast.js";
-import checkForecast from "../../utils/forecastFns/checkForecast.js";
+import checkForecast from "../../services/surfline/forecast/forecastFns/checkForecast.js";
+import fetchSurflineForecast from "../../services/surfline/forecast/getForecast.js";
 import { sendNotifications } from "../../utils/notificationFns/sendNotifications.js";
 
 // check surfline forecast for each spot and save
