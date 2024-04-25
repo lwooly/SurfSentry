@@ -22,8 +22,6 @@ const SelectForecastForm = ({
     refetch,
   } = surfSpotsData;
 
-  console.log(surfSpots)
-
   const {
     regions,
     subRegions,
@@ -35,25 +33,30 @@ const SelectForecastForm = ({
   const isServerError =
     isSurfSpotsServerError && isRegionsServerError ? true : false;
 
-  const [countryId, setCountryId] = useState<Region | null>(null);
+  const [regionId, setRegionId] = useState<Region | null>(null);
   const [subRegionId, setSubRegionId] = useState<Region | null>(null);
 
   const handleCountryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     e.preventDefault();
-    setCountryId(e.target.value);
+    setRegionId(e.target.value);
   };
 
   const handleSubRegionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     e.preventDefault();
     setSubRegionId(e.target.value);
+    console.log(e.target.value);
   };
 
-  const monitorNewForecast = async (e) => {
+  const monitorNewForecast = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const spotId = e.target[0].value;
+    const formData = new FormData(e.target as HTMLFormElement)
+
+    const formValues = Object.fromEntries(formData.entries())
+
+    const surfSpotId = formValues.surfSpot
     try {
       const response = await subscribeUserToSpot({
-        spotId,
+        spotId: surfSpotId,
         userId: user?.sub,
         accessToken,
       });
@@ -98,10 +101,8 @@ const SelectForecastForm = ({
                 -- select an option --{" "}
               </option>
               {subRegions?.map((sub) => {
-                if (countryId) {
-                  console.log('liesin: ', sub?.lies_in)
-                  console.log('country id', countryId)
-                  if (sub.lies_in.split(", ").includes(countryId)) {
+                if (regionId) {
+                  if (sub.lies_in.includes(regionId)) {
                     return (
                       <option key={sub.id} value={sub.id}>
                         {sub.region_name}
@@ -121,17 +122,18 @@ const SelectForecastForm = ({
         </select>
       </label>
 
-      <select name="surfspots">
+      <select name="surfSpot">
         <option disabled selected>
           {" "}
           -- select an option --{" "}
         </option>
         {surfSpots?.map((spot) => {
+          if (spot.surfline_id === "584204204e65fad6a77090d2") {
+            console.log("rest bay:", spot?.lies_in);
+          }
           if (spot.user_id !== user?.sub) {
             if (subRegionId) {
-              console.log('liesin: ', spot?.lies_in)
-              // console.log('region id', subRegionId)
-              if (spot?.lies_in.split(", ").includes(subRegionId)) {
+              if (spot?.lies_in.includes(subRegionId)) {
                 return (
                   <option key={spot.surfline_id} value={spot.surfline_id}>
                     {spot.spotname}
@@ -140,7 +142,10 @@ const SelectForecastForm = ({
               }
             } else {
               return (
-                <option key={`${spot.spotname}${spot.surfline_id}`} value={spot.surfline_id}>
+                <option
+                  key={`${spot.spotname}${spot.surfline_id}`}
+                  value={spot.surfline_id}
+                >
                   {spot.spotname}
                 </option>
               );

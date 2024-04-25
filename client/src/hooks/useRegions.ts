@@ -1,5 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { getRegions } from "@src/api/regions";
+import { all } from "node_modules/axios/index.d.cts";
 import { useCallback, useEffect, useState } from "react";
 
 export interface Region {
@@ -50,6 +51,7 @@ const useRegions = () => {
       // fetch allRegions
       const res = await getRegions({ accessToken });
       console.log('allRegions fetched successfully', res)
+
       setRegions(res.data);
     } catch (err) {
       setIsServerError(true);
@@ -67,14 +69,6 @@ const useRegions = () => {
   const refetch = () => {
     fetchRegions()
   }
-
-  //filter Regions
-const types:string[] = []
-     allRegions?.map(a => {
-    if(!types.includes(a?.fcode)) {
-      types.push(a.fcode)
-    }
-  })
 
   //countries only - depth 1
   const regions = allRegions?.filter(region => {
