@@ -1,0 +1,61 @@
+.optionBtn {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+  height: 50px;
+  padding-left: 16px;
+  padding-right: 16px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 17px;
+  line-height: 140%; /* 24px */
+  max-width: 400px;
+  text-align: left;
+  background-color: white;
+  border: solid 2px #dde1e6;
+  border-radius: 0;
+  border-top-width: 1px;
+  border-bottom-width: 1px;
+  cursor: pointer;
+  transition:
+    gap 0.3s ease-in-out,
+    padding-left 0.3s ease-in-out;
+
+  &:hover {
+    // background-color: #f2f4f8;
+    box-shadow: inset 0 0 0 6.51px hsla(227, 96%, 58%, 0.1);
+  }
+
+  @media (min-width: 787px) {
+    font-size: 24px;
+    height: 67px;
+    padding-left: 20px;
+    padding-right: 23px;
+  }
+
+  .btnArrow {
+    margin-left: auto;
+    rotate: -90deg;
+  }
+}
+
+.dropdownBtn {
+  border-radius: 3.63px;
+  border-top-width: 2px;
+  border-bottom-width: 2px;
+
+  @media (min-width: 787px) {
+    &:hover {
+      gap: 5px;
+      padding-left: 30px;
+    }
+  }
+}
+
+/* State: .open - button included in a dropdown which is active/visible */
+.open.dropdownBtn {
+  border: 2px solid #3c83ff;
+  .btnArrow {
+    rotate: 0deg;
+  }
+}

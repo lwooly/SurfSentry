@@ -1,0 +1,44 @@
+.dropdown {
+  position: relative;
+}
+
+.dropdownList {
+  display: none;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  list-style: none;
+  max-height: 300px;
+  overflow-y: scroll;
+
+  :last-child {
+    button {
+      border-bottom-left-radius: 4px;
+      border-bottom-right-radius: 4px;
+    }
+  }
+
+  @media (min-width: 787px) {
+    position: absolute;
+    bottom: 100;
+    left: 0;
+    z-index: 10;
+  }
+}
+
+/* State: .open - dropdown is active/visible */
+.open {
+  .dropdownList {
+    display: block;
+    height: 300px;
+  }
+
+  .dropdownBtn {
+    border: 2px solid #3c83ff;
+    .btnArrow {
+      rotate: 0deg;
+    }
+  }
+}

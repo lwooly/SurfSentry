@@ -36,7 +36,7 @@ export const surfCheck = async () => {
     })
   );
 
-  const spotSurflineIds = spotForecasts ? spotForecasts.map(forecast => forecast.surfline_id) : [];
+  const spotSurflineIds = spotForecasts ? spotForecasts.map(forecast => forecast?.surfline_id) : [];
 
   if (spotSurflineIds.length === 0) {
     console.log('No data available or error in fetching data');

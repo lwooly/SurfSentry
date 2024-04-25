@@ -1,6 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { subscribeUserToSpot } from "@src/api/spots";
 import ButtonWithArrow from "@src/components/global/ButtonWithArrow";
+import StyledSelect from "@src/components/global/StyledSelect";
 import useAccessToken from "@src/hooks/useAccessToken";
 import useRegions, { Region } from "@src/hooks/useRegions";
 import useSurfSpots, { UseSurfSpotsReturn } from "@src/hooks/useSurfSpots";
@@ -33,18 +34,20 @@ const SelectForecastForm = ({
   const isServerError =
     isSurfSpotsServerError && isRegionsServerError ? true : false;
 
-  const [regionId, setRegionId] = useState<Region | null>(null);
-  const [subRegionId, setSubRegionId] = useState<Region | null>(null);
+  const [regionId, setRegionId] = useState<string | null>(null);
+  const [subRegionId, setSubRegionId] = useState<string | null>(null);
+  const [spotId, setSpotId] = useState<string| null>(null);
 
-  const handleCountryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    e.preventDefault();
-    setRegionId(e.target.value);
+  const handleRegionChange = (id:string) => {
+    setRegionId(id);
   };
 
-  const handleSubRegionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    e.preventDefault();
-    setSubRegionId(e.target.value);
-    console.log(e.target.value);
+  const handleSubRegionChange = (id:string) => {
+    setSubRegionId(id);
+  };
+
+  const handleSpotChange = (id:string) => {
+    setSpotId(id);
   };
 
   const monitorNewForecast = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -54,6 +57,7 @@ const SelectForecastForm = ({
     const formValues = Object.fromEntries(formData.entries())
 
     const surfSpotId = formValues.surfSpot
+
     try {
       const response = await subscribeUserToSpot({
         spotId: surfSpotId,
@@ -69,58 +73,9 @@ const SelectForecastForm = ({
 
   return (
     <form onSubmit={monitorNewForecast}>
-      <label>
-        <select name="country" id="country" onChange={handleCountryChange}>
-          {!isLoading && !isServerError && (
-            <>
-              <option disabled selected>
-                {" "}
-                -- select an option --{" "}
-              </option>
-              {regions?.map((region) => {
-                return (
-                  <option key={region.id} value={region.id}>
-                    {region.region_name}
-                  </option>
-                );
-              })}
-            </>
-          )}
-        </select>
-      </label>
-      <label>
-        <select
-          name="subRegions"
-          id="subRegions"
-          onChange={handleSubRegionChange}
-        >
-          {!isLoading && !isServerError && (
-            <>
-              <option disabled selected>
-                {" "}
-                -- select an option --{" "}
-              </option>
-              {subRegions?.map((sub) => {
-                if (regionId) {
-                  if (sub.lies_in.includes(regionId)) {
-                    return (
-                      <option key={sub.id} value={sub.id}>
-                        {sub.region_name}
-                      </option>
-                    );
-                  }
-                } else {
-                  return (
-                    <option key={sub.id} value={sub.id}>
-                      {sub.region_name}
-                    </option>
-                  );
-                }
-              })}
-            </>
-          )}
-        </select>
-      </label>
+        <StyledSelect options={regions} onChange={handleRegionChange}/>
+        <StyledSelect options={subRegions} onChange={handleSubRegionChange}/>
+        <StyledSelect options={surfSpots} onChange={handleSpotChange}/>
 
       <select name="surfSpot">
         <option disabled selected>

@@ -2,7 +2,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { getSurfSpots } from "@src/api/spots";
 import { useCallback, useEffect, useState } from "react";
 
-interface SurfSpot {
+export interface SurfSpot {
   surfline_id: string;
   spotname: string;
   spot_ref: string;
