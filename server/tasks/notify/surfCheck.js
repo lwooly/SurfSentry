@@ -31,12 +31,16 @@ export const surfCheck = async () => {
         //return a forecast object for each spot
         return { spotname, surfline_id, goodForecast };
       } catch (error) {
-        console.log("Could not fetch surfline forecast:", error);
+        console.log("Could not fetch surfline forecast:", error.message);
       }
     })
   );
 
-  const spotSurflineIds = spotForecasts.map((forecast) => forecast.surfline_id);
+  const spotSurflineIds = spotForecasts ? spotForecasts.map(forecast => forecast.surfline_id) : [];
+
+  if (spotSurflineIds.length === 0) {
+    console.log('No data available or error in fetching data');
+  }
 
   //get users who subscribe to this spot.
   const subscriptions = await getSpotSubscriptionsFromDB(spotSurflineIds);

@@ -7,11 +7,12 @@ import { useAuth0 } from "@auth0/auth0-react";
 import SendNotificationsButton from "@src/components/global/SendNotificationsButton";
 import Forecasts from "@src/components/pages/home/Forecasts/Forecasts";
 import { Link } from "react-router-dom";
-import SelectForecast from "@src/components/pages/home/SelectForecast";
+import SelectForecast from "@src/components/pages/home/SelectForecastForm";
 import useSurfSpots from "@src/hooks/useSurfSpots";
 import fetchCreateUser from "@src/api/users";
 import useAccessToken from "@src/hooks/useAccessToken";
 import startSurfCheck from "@src/api/pushManager/startSurfCheck";
+import SelectForecastForm from "@src/components/pages/home/SelectForecastForm";
 
 const Home = () => {
   const { isAuthenticated, user } = useAuth0();
@@ -27,7 +28,7 @@ const Home = () => {
         <>
           <EnableNotificationsButton />
           <SendNotificationsButton />
-          <SelectForecast surfSpotsData={surfSpotsData} />
+          <SelectForecastForm surfSpotsData={surfSpotsData} />
           <Forecasts surfSpotsData={surfSpotsData} />
 
           <button onClick={() => {

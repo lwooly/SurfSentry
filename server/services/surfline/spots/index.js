@@ -1,29 +1,28 @@
 import { addRegionToDB } from "../../../lib/apiFunctions/regions/queries.js";
 import { addSurfSpotToDB } from "../../../lib/apiFunctions/surfSpots/queries.js";
 import { fetchSpots } from "./fetchSpots.js";
+import { getUKRegionsAndSpots } from "./getUKRegionsAndSpots.js";
 import { processRegions } from "./processRegions.js";
 import { processSpots } from "./processSpots.js";
 
-const UK_REGION_ID = "58f7efcadadb30820bb64fb3";
 
 const getSurflineTaxonomy = async () => {
-  const res = await fetchSpots(UK_REGION_ID); //UK spot id
+  const surflineRegions = await getUKRegionsAndSpots()
 
-  const surflineRegions = Array.from(res.contains); //TODO sort spots by region
-
-  // filter spots and regions
+  // filter for spots and regions only. Genonames excluded for now.
   const regionsArr = [];
   const spotsArr = [];
   surflineRegions.forEach((item) => {
     if (item.type === "spot") {
       spotsArr.push(item);
-    } else {
+    } else if (item.type === 'region' || item.type === 'subregion'){
       regionsArr.push(item);
     }
   });
 
   // save regions array database
   const regions = processRegions(regionsArr);
+
   try {
     const results = await Promise.all(
       await regions.map(async (region) => {
@@ -31,6 +30,7 @@ const getSurflineTaxonomy = async () => {
           await addRegionToDB(region);
           return { success: true };
         } catch (err) {
+          console.log(err)
           return { success: false, error: err };
         }
       })

@@ -16,14 +16,14 @@ CREATE TABLE
 
 CREATE TABLE
     spots (
-        surfline_id VARCHAR(300) PRIMARY KEY,
-        spotname VARCHAR NOT NULL,
-        spotRef VARCHAR,
+        surfline_id VARCHAR(255) PRIMARY KEY,
+        spotname VARCHAR(255)NOT NULL,
+        spot_ref VARCHAR,
         category VARCHAR,
-        hasSpots BOOLEAN,
-        liesIn VARCHAR NOT NULL,
-        spotLocation JSONB,
-        updatedAt VARCHAR,
+        has_spots BOOLEAN,
+        lies_in VARCHAR NOT NULL,
+        spot_location JSONB,
+        updated_at VARCHAR,
         depth INT
     );
 
@@ -40,21 +40,35 @@ CREATE TABLE
     );
 
 
+CREATE TABLE
+    spots (
+        surfline_id VARCHAR(255) PRIMARY KEY,
+        spotname VARCHAR(255)NOT NULL,
+        spot_ref VARCHAR,
+        category VARCHAR,
+        has_spots BOOLEAN,
+        lies_in VARCHAR NOT NULL,
+        spot_location JSONB,
+        updated_at VARCHAR,
+        depth INT
+    );
+
+
 CREATE TABLE 
     regions (
-        id VARCHAR NOT NULL PRIMARY KEY,
-        regionName VARCHAR NOT NULL,
-        regionType VARCHAR NOT NULL,
+        id VARCHAR(255)NOT NULL PRIMARY KEY,
+        region_name VARCHAR(255) NOT NULL,
+        region_type VARCHAR(255) NOT NULL,
         category VARCHAR,
-        hasSpots BOOLEAN,
-        liesIn VARCHAR NOT NULL,
+        has_spots BOOLEAN,
+        lies_in VARCHAR,
         depth INT,
-        updatedAt VARCHAR,
+        updated_at VARCHAR,
         latitude VARCHAR,
         longitude VARCHAR,
         fcode VARCHAR,
-        fclName VARCHAR,
-        fcodeName VARCHAR,
-        enumeratedPath VARCHAR,
-        subregionId VARCHAR
+        fcl_name VARCHAR,
+        fcode_name VARCHAR,
+        enumerated_path VARCHAR,
+        subregion_id VARCHAR
     );

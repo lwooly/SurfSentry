@@ -5,6 +5,12 @@ import { useCallback, useEffect, useState } from "react";
 interface SurfSpot {
   surfline_id: string;
   spotname: string;
+  spot_ref:string,
+  category?:string,
+  lies_in:string,
+  spot_location?:string,
+  updated_at?:string,
+  depth?:number
   user_id?: string;
 }
 
@@ -55,6 +61,8 @@ const useSurfSpots = ({ userId }: {userId: string | undefined}) => {
   const refetch = () => {
     fetchSurfSpots()
   }
+
+  console.log(surfSpots)
   
   return {
     isLoading,

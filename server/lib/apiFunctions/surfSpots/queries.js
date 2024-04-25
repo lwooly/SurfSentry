@@ -14,14 +14,15 @@ export const addSurfSpotToDB = async (spot) => {
   } = spot;
 
   const text = `INSERT INTO spots (
+
     surfline_id,
-    spotRef,
+    spot_ref,
     category,
-    hasSpots,
-    liesIn,
-    spotLocation,
+    has_spots,
+    lies_in,
+    spot_location,
     spotname,
-    updatedAt,
+    updated_at,
     depth
     ) 
         VALUES (
@@ -44,7 +45,7 @@ export const addSurfSpotToDB = async (spot) => {
     spotLocation,
     spotname,
     updatedAt,
-    depth,
+    depth
   ];
   const data = await db.query(text, values);
   return data.rows;
@@ -69,9 +70,7 @@ export const getUserSurfSpotsFromDB = async (userId) => {
 export const getSpotsAndSubscriptionsFromDB = async (userId) => {
 
   const text = `SELECT
-                  spots.surfline_id,
-                  spots.spotname,
-                  user_spots.user_id
+                  *
                   FROM 
                     spots 
                   LEFT JOIN 

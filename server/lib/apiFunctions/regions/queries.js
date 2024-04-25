@@ -1,5 +1,11 @@
 import * as db from "../../../db/index.js";
 
+export const getRegionsFromDB = async () => {
+  const text =`SELECT * FROM regions;`
+  const data = await db.query(text)
+  return data.rows;
+}
+
 export const addRegionToDB = async (region) => {
   const {
     id,
@@ -21,20 +27,20 @@ export const addRegionToDB = async (region) => {
 
   const text = `INSERT INTO regions (
         id,
-        regionName,
-        regionType,
+        region_name,
+        region_type,
         category,
-        hasSpots,
-        liesIn,
+        has_spots,
+        lies_in,
         depth,
-        updatedAt,
+        updated_at,
         latitude,
         longitude,
         fcode,
-        fclName,
-        fcodeName,
-        enumeratedPath,
-        subregionId
+        fcl_name,
+        fcode_name,
+        enumerated_path,
+        subregion_id
     ) 
         VALUES (
             $1, 

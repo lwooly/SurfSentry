@@ -5,8 +5,8 @@ const BASE_SPOT_URL = "https://services.surfline.com/taxonomy/";
 
 const cache = {};
 
-export const fetchSpots = async (id) => {
-  const baseUrl = `${BASE_SPOT_URL}?type=taxonomy&id=${id}`;
+export const fetchSpots = async (id, maxDepth = 0) => {
+  const baseUrl = `${BASE_SPOT_URL}?type=taxonomy&id=${id}&maxDepth=${maxDepth}`;
 
   if (cache[baseUrl]) {
     return cache[baseUrl];
@@ -21,3 +21,6 @@ export const fetchSpots = async (id) => {
     console.log("Spots not found", err);
   }
 };
+
+
+

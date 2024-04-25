@@ -8,7 +8,7 @@ import NavBarAuthButtons from '../NavBarButtons';
 const Header:FC = () => {
     return (
         <div className={styles.header}>
-            <h1>Surfscrape</h1>
+            <h1>SurfSentry</h1>
             <div className={styles.btns}>
             <NavBarAuthButtons />
             </div>

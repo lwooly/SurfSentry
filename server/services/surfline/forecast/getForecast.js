@@ -7,7 +7,7 @@ import createSurflineEndpoint from "./forecastFns/createSurflineEndpoint.js";
 const fetchSurflineForecast = async (spotId) => {
     const forecastEndpoint = createSurflineEndpoint(spotId);
     try {
-        const response = await axios.get(forecastEndpoint)
+        const response = await axios.get(forecastEndpoint, { timeout: 10000 })
         // return condition forecast only
         // console.log(response.data.data.conditions)
         return response.data.data.conditions
