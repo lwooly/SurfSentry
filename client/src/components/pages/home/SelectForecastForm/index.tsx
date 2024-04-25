@@ -73,9 +73,9 @@ const SelectForecastForm = ({
 
   return (
     <form onSubmit={monitorNewForecast}>
-        <StyledSelect options={regions} onChange={handleRegionChange}/>
-        <StyledSelect options={subRegions} onChange={handleSubRegionChange}/>
-        <StyledSelect options={surfSpots} onChange={handleSpotChange}/>
+        <StyledSelect options={regions} onChange={handleRegionChange} />
+        <StyledSelect options={subRegions} onChange={handleSubRegionChange} parentId={regionId}/>
+        <StyledSelect options={surfSpots} onChange={handleSpotChange} parentId={subRegionId}/>
 
       <select name="surfSpot">
         <option disabled selected>

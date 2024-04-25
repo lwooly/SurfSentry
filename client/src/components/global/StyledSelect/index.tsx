@@ -7,7 +7,6 @@ import StyledOption from "../StyledOption";
 import { Region } from "@src/hooks/useRegions";
 import { SurfSpot } from "@src/hooks/useSurfSpots";
 
-
 //handle both regions and spots
 type Option = Region | SurfSpot;
 
@@ -17,9 +16,13 @@ function isRegion(option: Option): option is Region {
 
 interface Props {
   options: Option[];
+  onChange: (id: string) => void;
+  parentId: string | undefined;
 }
-const StyledSelect: FC<Props> = ({options, onChange}) => {
-  const [current, setCurrent] = useState<Option | undefined>(options?.length > 0 ? options[0] : undefined);
+const StyledSelect: FC<Props> = ({ options, onChange, parentId }) => {
+  const [current, setCurrent] = useState<Option | undefined>(
+    options?.length > 0 ? options[0] : undefined
+  );
   const [isOpen, setIsOpen] = useState(false);
 
   const dropdownRef = useRef<HTMLUListElement>(null);
@@ -30,11 +33,10 @@ const StyledSelect: FC<Props> = ({options, onChange}) => {
   };
 
   const handleSelect = (item: Region | SurfSpot) => {
-    const id = isRegion(item) ? item.id : item.surfline_id
-    onChange(id)
+    const id = isRegion(item) ? item.id : item.surfline_id;
+    onChange(id);
     setIsOpen(false);
     setCurrent(item);
-    
   };
 
   // allow user to click elsewhere to close dropdown and prevent more than one open
@@ -66,11 +68,32 @@ const StyledSelect: FC<Props> = ({options, onChange}) => {
       <ul ref={dropdownRef} className={styles.dropdownList} role="listbox">
         {options?.map((option, index) => {
           // do not include current selection in dropdown list
-          if (option?.spotname !== current?.spotname || option?.region_name !== current?.region_name) {
+          if (parentId) {
+
+            if (
+              option?.spotname !== current?.spotname ||
+              option?.region_name !== current?.region_name
+            ) {
+              if (option.lies_in && option?.lies_in.includes(parentId)) {
+                return (
+                  <li key={index}>
+                    <StyledOption
+                      handleClickFn={(e) => {
+                        e.preventDefault()
+                        handleSelect(option);
+                      }}
+                      option={option}
+                    />
+                  </li>
+                );
+              }
+            }
+
+          } else {
             return (
               <li key={index}>
                 <StyledOption
-                  handleClickFn={() => {
+                  handleClickFn={(e) => {
                     handleSelect(option);
                   }}
                   option={option}
@@ -78,6 +101,8 @@ const StyledSelect: FC<Props> = ({options, onChange}) => {
               </li>
             );
           }
+          
+        
         })}
       </ul>
     </div>
