@@ -18,27 +18,41 @@ const Forecasts = ({surfSpotsData}:{surfSpotsData: UseSurfSpotsReturn}) => {
       {user && !isLoading && !isServerError && (
         <div className={styles.contentWrapper}>
           <div className={styles.content}>
-            <h1>Forecasts</h1>
+            <div className={`${styles.titleRow} ${styles.forecastRow}`}>
+              <div className={styles.col1}>
+                <h2 >Forecasts</h2>
+              </div>
+              <div className={styles.col2}>
+                <h4 className={`${styles.titleRow} ${styles.forecastRow}`}>Unsubscribe</h4>
+              </div>
+            </div>
+
             {surfSpots?.map(({ spotname, user_id, surfline_id }, index) => (
               <>
                 {user_id === user.sub ? (
                   <li key={`${spotname}-${user_id}-${index}`} className={styles.forecastRow}>
-                    <h3>{spotname}</h3>
-                    <button
-                      onClick={async () => {
-                        await unSubscribeUserToSpot({
-                          spotId: surfline_id,
-                          userId: user.sub,
-                          accessToken: accessToken,
-                        });
-                        refetch();
-                      }}
-                    >
-                      remove
-                    </button>
+                    <div className={styles.col1}>
+                      <h5 >{spotname}</h5>
+                    </div>
+                    <div className={styles.col2}>
+                      <button
+                      aria-label="unsubcribe"
+                      className={` ${styles.removeIcon}`}
+                        onClick={async () => {
+                          await unSubscribeUserToSpot({
+                            spotId: surfline_id,
+                            userId: user.sub,
+                            accessToken: accessToken,
+                          });
+                          refetch();
+                        }}
+                      >
+                        <img src="/src/assets/images/icons/delete_remove_icon.svg" alt="delete" />
+                      </button>
+                    </div>
                   </li>
                 ) : (
-                  ""
+                  null
                 )}
               </>
             ))}

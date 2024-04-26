@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import Header from '@src/components/global/Header'
 import { Outlet } from 'react-router-dom';
+import Footer from '../footer';
 
 const Layout:FC = () => {
     return (
@@ -12,6 +13,7 @@ const Layout:FC = () => {
             <Outlet />
         </main>
         <footer>
+            <Footer />
         </footer>
         </>
     );
