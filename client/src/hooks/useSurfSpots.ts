@@ -51,7 +51,6 @@ const useSurfSpots = ({ userId }: { userId: string | undefined }) => {
         }
         return item;
       });
-      console.log(unpackedData);
       setSurfspots(unpackedData);
     } catch (err) {
       setIsServerError(true);
@@ -68,14 +67,6 @@ const useSurfSpots = ({ userId }: { userId: string | undefined }) => {
   const refetch = () => {
     fetchSurfSpots();
   };
-
-  //check for rest bay
-
-  const rb = surfSpots?.filter((spot) => {
-    return spot.surfline_id === "584204204e65fad6a77090d2";
-  });
-
-  console.log("REST BAY", rb);
 
   return {
     isLoading,

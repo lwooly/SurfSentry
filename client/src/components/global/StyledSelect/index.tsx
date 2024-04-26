@@ -1,11 +1,11 @@
 "use client";
 
 import { FC, useEffect, useRef, useState } from "react";
-
 import styles from "./styles.module.scss";
 import StyledOption from "../StyledOption";
 import { Region } from "@src/hooks/useRegions";
 import { SurfSpot } from "@src/hooks/useSurfSpots";
+import { SelectProvider } from "@src/components/contexts/select.context";
 
 //handle both regions and spots
 type Option = Region | SurfSpot;
@@ -15,14 +15,12 @@ function isRegion(option: Option): option is Region {
 }
 
 interface Props {
-  options: Option[];
-  onChange: (id: string) => void;
-  parentId: string | undefined;
+  options: Option[] | undefined;
+  onChange: (region: Region) => void;
+  parent: Option | undefined;
+  current: Option | undefined;
 }
-const StyledSelect: FC<Props> = ({ options, onChange, parentId }) => {
-  const [current, setCurrent] = useState<Option | undefined>(
-    options?.length > 0 ? options[0] : undefined
-  );
+const StyledSelect: FC<Props> = ({ options, onChange, parent, current }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const dropdownRef = useRef<HTMLUListElement>(null);
@@ -32,11 +30,14 @@ const StyledSelect: FC<Props> = ({ options, onChange, parentId }) => {
     setIsOpen(!isOpen);
   };
 
-  const handleSelect = (item: Region | SurfSpot) => {
-    const id = isRegion(item) ? item.id : item.surfline_id;
-    onChange(id);
+  const handleSelect = (
+    e: React.MouseEvent<HTMLButtonElement>,
+    item: Region | SurfSpot
+  ) => {
+    e.preventDefault();
+    // const id = isRegion(item) ? item.id : item.surfline_id;
+    onChange(item);
     setIsOpen(false);
-    setCurrent(item);
   };
 
   // allow user to click elsewhere to close dropdown and prevent more than one open
@@ -58,54 +59,48 @@ const StyledSelect: FC<Props> = ({ options, onChange, parentId }) => {
   }, [isOpen]);
 
   return (
-    <div className={`${styles.dropdown} ${isOpen ? styles.open : ""}`}>
-      <StyledOption
-        handleClickFn={toggleDropdown}
-        option={current}
-        isDropdown
-        isOpen={isOpen}
-      />
-      <ul ref={dropdownRef} className={styles.dropdownList} role="listbox">
-        {options?.map((option, index) => {
-          // do not include current selection in dropdown list
-          if (parentId) {
-
+  <div className={styles.selectContainer}>
+      <div className={`${styles.dropdown} ${isOpen ? styles.open : ""}`}>
+        <StyledOption
+          handleClickFn={toggleDropdown}
+          option={current}
+          isDropdown
+          isOpen={isOpen}
+        />
+        <ul ref={dropdownRef} className={styles.dropdownList} role="listbox">
+          {options?.map((option, index) => {
+            // do not include current selection in dropdown list
             if (
               option?.spotname !== current?.spotname ||
               option?.region_name !== current?.region_name
             ) {
-              if (option.lies_in && option?.lies_in.includes(parentId)) {
-                return (
-                  <li key={index}>
-                    <StyledOption
-                      handleClickFn={(e) => {
-                        e.preventDefault()
-                        handleSelect(option);
-                      }}
-                      option={option}
-                    />
-                  </li>
-                );
+              if (parent) {
+                if (option.lies_in && option?.lies_in.includes(parent.id)) {
+                  return (
+                    <li key={index}>
+                      <StyledOption
+                        handleClickFn={(e) => handleSelect(e, option)}
+                        option={option}
+                      />
+                    </li>
+                  );
+                }
               }
+             else {
+              return (
+                <li key={index}>
+                  <StyledOption
+                    handleClickFn={(e) => handleSelect(e, option)}
+                    option={option}
+                  />
+                </li>
+              );
             }
-
-          } else {
-            return (
-              <li key={index}>
-                <StyledOption
-                  handleClickFn={(e) => {
-                    handleSelect(option);
-                  }}
-                  option={option}
-                />
-              </li>
-            );
           }
-          
-        
-        })}
-      </ul>
-    </div>
+          })}
+        </ul>
+      </div>
+  </div>
   );
 };
 

@@ -4,8 +4,15 @@ import ButtonWithArrow from "@src/components/global/ButtonWithArrow";
 import StyledSelect from "@src/components/global/StyledSelect";
 import useAccessToken from "@src/hooks/useAccessToken";
 import useRegions, { Region } from "@src/hooks/useRegions";
-import useSurfSpots, { UseSurfSpotsReturn } from "@src/hooks/useSurfSpots";
+import useSurfSpots, {
+  SurfSpot,
+  UseSurfSpotsReturn,
+} from "@src/hooks/useSurfSpots";
 import React, { useState } from "react";
+
+import styles from './styles.module.scss'
+import StyledOption from "@src/components/global/StyledOption";
+
 
 const SelectForecastForm = ({
   surfSpotsData,
@@ -34,33 +41,35 @@ const SelectForecastForm = ({
   const isServerError =
     isSurfSpotsServerError && isRegionsServerError ? true : false;
 
-  const [regionId, setRegionId] = useState<string | null>(null);
-  const [subRegionId, setSubRegionId] = useState<string | null>(null);
-  const [spotId, setSpotId] = useState<string| null>(null);
+  const [currentRegion, setCurrentRegion] = useState<Region | null>(null);
+  const [currentSubRegion, setCurrentSubRegion] = useState<Region | null>(null);
+  const [currentSpot, setCurrentSpot] = useState<SurfSpot | null>(null);
 
-  const handleRegionChange = (id:string) => {
-    setRegionId(id);
+  const handleRegionChange = (region: Region) => {
+    setCurrentRegion(region);
+    setCurrentSubRegion(null)
+    setCurrentSpot(null)
   };
 
-  const handleSubRegionChange = (id:string) => {
-    setSubRegionId(id);
+  const handleSubRegionChange = (subRegion: Region) => {
+    setCurrentSubRegion(subRegion);
+    setCurrentSpot(null)
   };
 
-  const handleSpotChange = (id:string) => {
-    setSpotId(id);
+  const handleSpotChange = (spot: SurfSpot) => {
+    setCurrentSpot(spot);
   };
 
   const monitorNewForecast = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.target as HTMLFormElement)
-
-    const formValues = Object.fromEntries(formData.entries())
-
-    const surfSpotId = formValues.surfSpot
+    setCurrentSpot(null)
+    if (!currentSpot) {
+      return;
+    }
 
     try {
-      const response = await subscribeUserToSpot({
-        spotId: surfSpotId,
+      await subscribeUserToSpot({
+        spotId: currentSpot.surfline_id,
         userId: user?.sub,
         accessToken,
       });
@@ -72,44 +81,41 @@ const SelectForecastForm = ({
   };
 
   return (
-    <form onSubmit={monitorNewForecast}>
-        <StyledSelect options={regions} onChange={handleRegionChange} />
-        <StyledSelect options={subRegions} onChange={handleSubRegionChange} parentId={regionId}/>
-        <StyledSelect options={surfSpots} onChange={handleSpotChange} parentId={subRegionId}/>
+    <div className={styles.forecastForm}>
+      <div className={styles.container}>
+        <form onSubmit={monitorNewForecast}>
+          <label>
+          <StyledSelect
+            options={regions}
+            onChange={handleRegionChange}
+            current={currentRegion}
+          >
 
-      <select name="surfSpot">
-        <option disabled selected>
-          {" "}
-          -- select an option --{" "}
-        </option>
-        {surfSpots?.map((spot) => {
-          if (spot.surfline_id === "584204204e65fad6a77090d2") {
-            console.log("rest bay:", spot?.lies_in);
-          }
-          if (spot.user_id !== user?.sub) {
-            if (subRegionId) {
-              if (spot?.lies_in.includes(subRegionId)) {
-                return (
-                  <option key={spot.surfline_id} value={spot.surfline_id}>
-                    {spot.spotname}
-                  </option>
-                );
-              }
-            } else {
-              return (
-                <option
-                  key={`${spot.spotname}${spot.surfline_id}`}
-                  value={spot.surfline_id}
-                >
-                  {spot.spotname}
-                </option>
-              );
-            }
-          }
-        })}
-      </select>
-      <button type="submit">Monitor forecast</button>
-    </form>
+
+          </StyledSelect>
+          </label>
+          <label>
+          <StyledSelect
+            options={subRegions}
+            onChange={handleSubRegionChange}
+            parent={currentRegion}
+            current={currentSubRegion}
+          />
+          </label>
+          <label>
+          <StyledSelect
+            options={surfSpots}
+            onChange={handleSpotChange}
+            parent={currentSubRegion}
+            current={currentSpot}
+          />
+          </label>
+          <ButtonWithArrow handleClick={monitorNewForecast} type='button'>
+            Monitor Forecast
+          </ButtonWithArrow>
+        </form>
+      </div>
+    </div>
   );
 };
 
