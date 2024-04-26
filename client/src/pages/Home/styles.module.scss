@@ -17,16 +17,37 @@
       font-weight: 600;
       letter-spacing: -2.4px;
       line-height: 80px;
-      margin: 20px 0px 10px 0px;
+      margin: 20px 0px 0px 0px;
     }
     h3 {
-      font-weight:700;
+      font-weight: 700;
       letter-spacing: -2.4px;
-      font-size:40px;
+      font-size: 40px;
       margin: 1rem 2rem 1rem 0;
-  }
-  .monitoring {
-    margin-bottom: 40px;
-  }
+    }
+    .monitoring {
+      margin-bottom: 40px;
+
+      .titleWrapper {
+        display: flex;
+      }
+
+      .loader {
+        margin-top: 53px;
+        margin-left: 1px;
+
+        width: 40px;
+        aspect-ratio: 4;
+        background: radial-gradient(circle closest-side, #000 90%, #0000) 0 /
+          calc(100% / 3) 100% space;
+        clip-path: inset(0 100% 0 0);
+        animation: l1 1s steps(4) infinite;
+      }
+      @keyframes l1 {
+        to {
+          clip-path: inset(0 -34% 0 0);
+        }
+      }
+    }
   }
 }

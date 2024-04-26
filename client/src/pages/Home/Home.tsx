@@ -26,28 +26,34 @@ const Home = () => {
       <div className={styles.contentContainer}>
 
 
-        {isAuthenticated && (
+        {isAuthenticated ? (
           <div className={styles.content}>
             {enableNotifyVisible ? 
             <h1>Monitor Forecasts</h1> :
             <div className={styles.monitoring}>
-             <h1>Monitoring Forecasts...</h1>
+              <div className={styles.titleWrapper}>
+              <h1>Monitoring Forecasts</h1>
+              <div className={styles.loader}></div>
+                 </div>
+             
             <p>Leave the browser open on any page to ensure you recieve notifications.</p>
             </div>
            
             }
             <EnableNotifications />
-            <SelectForecastForm surfSpotsData={surfSpotsData} />
+
+            {!enableNotifyVisible && <SelectForecastForm surfSpotsData={surfSpotsData} />}
+            
           </div>
           
-        )}
+        ) : (<HeroMain />)}
         
       </div>
       <Forecasts surfSpotsData={surfSpotsData} />
 
       {!isAuthenticated && 
-      <> <HeroMain />
-      <Features /></>
+    
+      <Features />
      }
     </div>
   );
