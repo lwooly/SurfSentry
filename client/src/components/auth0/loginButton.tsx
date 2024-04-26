@@ -1,6 +1,5 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import React from "react";
-import ButtonWithArrow from "../global/ButtonWithArrow";
+import SlideButton from "../global/SlideButton";
 
 export const LoginButton = () => {
   const { loginWithRedirect } = useAuth0();
@@ -14,8 +13,8 @@ export const LoginButton = () => {
   };
 
   return (
-    <ButtonWithArrow handleClick={handleLogin}>
+    <SlideButton onClick={handleLogin} isBlue>
         Login
-    </ButtonWithArrow>
+    </SlideButton>
   );
 };

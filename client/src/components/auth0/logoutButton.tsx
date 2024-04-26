@@ -1,5 +1,5 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import ButtonWithArrow from "../global/ButtonWithArrow";
+import SlideButton from "../global/SlideButton";
 
 export const LogoutButton = () => {
   const { logout } = useAuth0();
@@ -13,8 +13,8 @@ export const LogoutButton = () => {
   };
 
   return (
-    <ButtonWithArrow handleClick={handleLogout}>
+    <SlideButton onClick={handleLogout}>
       Log Out
-    </ButtonWithArrow>
+    </SlideButton>
   );
 };

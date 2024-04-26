@@ -30,7 +30,7 @@
 
         transition: width 0.2s;
 
-        img {
+        .arrow {
             position: absolute;
             z-index: 2;
             margin-left: auto;
@@ -49,6 +49,18 @@
         }
     }
 
+}
 
+.isBlue {
+    border-color: #007aff;
+    background-color: #007aff;
+    .hoverCircle{
+        .arrow{
+            filter: invert(59%) sepia(79%) saturate(7217%) hue-rotate(200deg) brightness(101%) contrast(106%);
+        }
+    }
 
+    &:hover {
+        color: #007aff;
+    }
 }

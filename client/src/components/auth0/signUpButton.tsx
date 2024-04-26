@@ -1,6 +1,5 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import React from "react";
-import ButtonWithArrow from "../global/ButtonWithArrow";
+import SlideButton from "../global/SlideButton";
 
 export const SignUpButton = () => {
   const { loginWithRedirect } = useAuth0();
@@ -8,7 +7,7 @@ export const SignUpButton = () => {
   const handleLogin = async () => {
     await loginWithRedirect({
       appState: {
-        returnTo: "/profile",
+        returnTo: "/",
       },
       authorizationParams: {
         screen_hint: "signup",
@@ -17,8 +16,8 @@ export const SignUpButton = () => {
   };
 
   return (
-    <ButtonWithArrow handleClick={handleLogin}>
-        SignUp
-    </ButtonWithArrow>
+    <SlideButton onClick={handleLogin}>
+        Get Started
+    </SlideButton>
   );
 };

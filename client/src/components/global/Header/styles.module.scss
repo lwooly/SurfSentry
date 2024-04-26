@@ -1,9 +1,20 @@
 .header {
-    background-color: gray;
-    padding: 1em;
+    height: 80px;
+// background-color: gray;
+    .container{
     display: flex;
     align-items: center;
-    h1 {
+    padding: 0.5em 2em;
+    // margin-left;
+    .logo {
+        height:60px;
+        width: auto;
+        margin-left: 16px;
+    }
+    .logoText{
+        height: 35px;
+    }
+    p {
         font-size: x-large;
         font-family:Arial, Helvetica, sans-serif;
         margin: 0;
@@ -11,4 +22,7 @@
     .btns {
         margin-left: auto;
     }
+
+    }
+    
 }

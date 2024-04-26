@@ -13,12 +13,10 @@ const NavBarAuthButtons = () => {
   return (
     <div className={styles.navBarButtons}>
     {!isAuthenticated && <>
-        <LoginButton />
-        <SignUpButton />
+        <LoginButton/>
+        {/* <SignUpButton /> */}
     </>}
     {isAuthenticated && <LogoutButton />}
-      
-      
       
     </div>
   );

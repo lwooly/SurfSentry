@@ -2,17 +2,15 @@ import React, { FC } from "react";
 
 import styles from "./styles.module.scss";
 
-interface Props {
-  handleClick?: () => void;
-  children: React.ReactNode;
-}
+type ButtonProps = React.ComponentProps<'button'>
 
-const SlideButton: FC<Props> = ({ children, ...props }) => {
+const SlideButton: FC<ButtonProps> = ({ children, isBlue, ...props }) => {
+   console.log(isBlue)
   return (
-    <button className={styles.slideButton} {...props}>
+    <button className={`${styles.slideButton} ${isBlue ? styles.isBlue : ''}`} {...props}>
       <div className={styles.contentWrapper}>{children}</div>
       <div className={styles.hoverCircle}>
-        <img src="/src/assets/images/icons/btnArrow.svg" alt="" />
+        <img src="/src/assets/images/icons/btnArrow.svg" alt="" className={styles.arrow}/>
       </div>
     </button>
   );

@@ -1,0 +1,40 @@
+.features{
+    width: 100%;
+    .container {
+        width: 100%;
+        border-top: lightgrey solid 1px;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px -5px 5px;
+        padding: 2rem;
+    }
+
+    .contentWrapper {
+        display: flex;
+        width: 100%;
+        justify-content: space-around;
+        .feature {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+        h2 {
+
+            font-size: 1.3rem;
+            font-weight: 500;
+            letter-spacing: -0.5px;
+            padding: 0.5rem 0;
+            border-bottom:  lightgrey solid 1px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.5em;
+            margin: 1rem;
+            padding: 0;
+        }
+        .waveImage{
+         height: 200px;
+        }
+
+    }
+    }
+}

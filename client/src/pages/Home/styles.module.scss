@@ -2,37 +2,12 @@
   width: 100%;
   min-height: 100vh;
 
-  .container {
-    width: 90%;
+  .contentContainer {
+    width: 80%;
     max-width: 1300px;
-    margin: 200px auto;
-  }
-
-  .contentWrapper {
+    margin: 100px auto 150px auto;
     background-color: lightblue;
     padding: 80px 40px;
-    text-align: center;
-
-    h1 {
-      font-size: 64px;
-      font-weight: 600;
-      letter-spacing: -2.4px;
-      line-height: 80px;
-      margin: 20px 0px;
-
-      span {
-        color: #ed7874;
-      }
-    }
-
-    p {
-        font-size: 18px;
-        font-weight: 500;
-    }
-
-    .buttonWrapper {
-        display: inline-flex;
-        gap: 16px;
-    }
+    border-radius: 1em;
   }
 }
