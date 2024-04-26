@@ -12,6 +12,7 @@ import React, { useState } from "react";
 
 import styles from './styles.module.scss'
 import StyledOption from "@src/components/global/StyledOption";
+import SlideButton from "@src/components/global/SlideButton";
 
 
 const SelectForecastForm = ({
@@ -83,8 +84,10 @@ const SelectForecastForm = ({
   return (
     <div className={styles.forecastForm}>
       <div className={styles.container}>
+      <h3 className={styles.getReady}>Select new forecast to monitor</h3>
         <form onSubmit={monitorNewForecast}>
           <label>
+            <h4>Country</h4>
           <StyledSelect
             options={regions}
             onChange={handleRegionChange}
@@ -95,6 +98,7 @@ const SelectForecastForm = ({
           </StyledSelect>
           </label>
           <label>
+          <h4>Region</h4>
           <StyledSelect
             options={subRegions}
             onChange={handleSubRegionChange}
@@ -103,6 +107,7 @@ const SelectForecastForm = ({
           />
           </label>
           <label>
+          <h4>Surf Spot</h4>
           <StyledSelect
             options={surfSpots}
             onChange={handleSpotChange}
@@ -110,9 +115,9 @@ const SelectForecastForm = ({
             current={currentSpot}
           />
           </label>
-          <ButtonWithArrow handleClick={monitorNewForecast} type='button'>
+          <SlideButton onClick={monitorNewForecast} type='button'>
             Monitor Forecast
-          </ButtonWithArrow>
+          </SlideButton>
         </form>
       </div>
     </div>

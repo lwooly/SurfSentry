@@ -4,13 +4,29 @@
         width: 100%;
     }
 
+    h3 {
+        font-weight:700;
+      letter-spacing: -2.4px;
+      font-size:40px;
+      margin: 1rem 2rem 0rem 0;
+    }
+
     form {
         width: 100%;
         display: flex;
         gap: 15px;
+        align-items: end;
+
+        &:last-child{
+            margin-left: auto;
+        }
 
         label {
             width: 100%;
+
+            h4 {
+                margin: 0.3rem  0;
+            }
         }
     }
 }

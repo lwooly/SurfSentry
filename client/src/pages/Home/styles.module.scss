@@ -4,10 +4,29 @@
 
   .contentContainer {
     width: 80%;
-    max-width: 1300px;
+    max-width: 1200px;
     margin: 100px auto 150px auto;
     background-color: lightblue;
-    padding: 80px 40px;
+    padding: 80px 80px;
     border-radius: 1em;
+  }
+
+  .content {
+    h1 {
+      font-size: 64px;
+      font-weight: 600;
+      letter-spacing: -2.4px;
+      line-height: 80px;
+      margin: 20px 0px 10px 0px;
+    }
+    h3 {
+      font-weight:700;
+      letter-spacing: -2.4px;
+      font-size:40px;
+      margin: 1rem 2rem 1rem 0;
+  }
+  .monitoring {
+    margin-bottom: 40px;
+  }
   }
 }

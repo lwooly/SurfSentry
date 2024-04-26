@@ -18,13 +18,13 @@ const Features = () => {
             </div>
             <div className={styles.feature}>
                 <h2>Notifications</h2>
-                <p>No time to scour extensive forecast data?</p>
+                <p>Pin point forecast data</p>
                 <p>Recieve a notification to your device</p>
             </div>
             <div className={styles.feature}>
                 <h2>Minimise screen time</h2>
                 <p>Limit your surf checking to key times</p>
-                <p>Limit your surf checking to key times</p>
+                <p>No more scrolling</p>
             </div>
           
         </div>
