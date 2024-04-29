@@ -22,6 +22,7 @@ interface Props {
 }
 const StyledSelect: FC<Props> = ({ options, onChange, parent, current }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const dropdownRef = useRef<HTMLUListElement>(null);
 
@@ -58,49 +59,77 @@ const StyledSelect: FC<Props> = ({ options, onChange, parent, current }) => {
     return () => window.removeEventListener("click", close);
   }, [isOpen]);
 
+  // find options where filtered by parent
+
+  const dropDownOptions = []
+  options?.forEach((option, index) => {
+    // do not include current selection in dropdown list
+    if (
+      option?.spotname !== current?.spotname ||
+      option?.region_name !== current?.region_name
+    ) {
+      //parent present for region and subregion due to placeholders.
+      if (parent) {
+        // show options if contained by parent
+        if (option.lies_in && option?.lies_in.includes(parent.id)) {
+          dropDownOptions.push(
+            <li key={index}>
+              <StyledOption
+                handleClickFn={(e) => handleSelect(e, option)}
+                option={option}
+              />
+            </li>
+          );
+        }
+      } else {
+        // Drop down option button - no parent - country
+        dropDownOptions.push(
+          <li key={index}>
+            <StyledOption
+              handleClickFn={(e) => handleSelect(e, option)}
+              option={option}
+            />
+          </li>
+        );
+      }
+    }
+  });
+
+  useEffect(() => {
+    if (dropDownOptions && dropDownOptions?.length > 0) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+  }, [dropDownOptions]);
+  console.log(dropDownOptions)
+
+  console.log(isDisabled)
+
   return (
-  <div className={styles.selectContainer}>
+    <div className={styles.selectContainer}>
       <div className={`${styles.dropdown} ${isOpen ? styles.open : ""}`}>
-        <StyledOption
-          handleClickFn={toggleDropdown}
-          option={current}
-          isDropdown
-          isOpen={isOpen}
-        />
+        {isDisabled ? (
+         <StyledOption
+         handleClickFn={() =>{}}
+         option={current}
+        //  isDropdown
+         isOpen={isOpen}
+         disabled
+       />
+        ) : (
+          <StyledOption
+            handleClickFn={toggleDropdown}
+            option={current}
+            isDropdown
+            isOpen={isOpen}
+          />
+        )}
         <ul ref={dropdownRef} className={styles.dropdownList} role="listbox">
-          {options?.map((option, index) => {
-            // do not include current selection in dropdown list
-            if (
-              option?.spotname !== current?.spotname ||
-              option?.region_name !== current?.region_name
-            ) {
-              if (parent) {
-                if (option.lies_in && option?.lies_in.includes(parent.id)) {
-                  return (
-                    <li key={index}>
-                      <StyledOption
-                        handleClickFn={(e) => handleSelect(e, option)}
-                        option={option}
-                      />
-                    </li>
-                  );
-                }
-              }
-             else {
-              return (
-                <li key={index}>
-                  <StyledOption
-                    handleClickFn={(e) => handleSelect(e, option)}
-                    option={option}
-                  />
-                </li>
-              );
-            }
-          }
-          })}
+          {dropDownOptions}
         </ul>
       </div>
-  </div>
+    </div>
   );
 };
 

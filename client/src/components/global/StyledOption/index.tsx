@@ -15,21 +15,25 @@ const StyledOption = ({
   option,
   isDropdown = false,
   isOpen,
+  disabled,
 }: {
   handleClickFn: (event: React.MouseEvent<HTMLButtonElement>) => void;
   option: Option | undefined;
   isDropdown?: boolean;
   isOpen?: boolean;
+  disabled?:boolean
 }) => {
   return (
     <button
       className={`${styles.optionBtn} ${isDropdown && styles.dropdownBtn} ${
         isOpen && styles.open
-      }`}
+      } ${disabled && styles.disabled}`}
       onClick={handleClickFn}
       aria-haspopup={isDropdown ? "listbox" : undefined}
       aria-expanded={isDropdown ? isOpen : undefined}
       aria-current={isDropdown ? "true" : undefined}
+      type="button"
+      disabled={disabled && true}
     >
       {/* <span>{option.flag}</span> */}
       <span>

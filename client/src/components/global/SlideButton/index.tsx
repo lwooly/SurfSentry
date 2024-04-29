@@ -5,7 +5,6 @@ import styles from "./styles.module.scss";
 type ButtonProps = React.ComponentProps<'button'>
 
 const SlideButton: FC<ButtonProps> = ({ children, isBlue, ...props }) => {
-   console.log(isBlue)
   return (
     <button className={`${styles.slideButton} ${isBlue ? styles.isBlue : ''}`} {...props}>
       <div className={styles.contentWrapper}>{children}</div>

@@ -14,7 +14,7 @@ import styles from './styles.module.scss'
 import StyledOption from "@src/components/global/StyledOption";
 import SlideButton from "@src/components/global/SlideButton";
 
-interface SelectPlaceholder {
+export interface SelectPlaceholder {
 region_name: string;
 }
 
@@ -67,7 +67,7 @@ const SelectForecastForm = ({
 
   const monitorNewForecast = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setCurrentSpot({spotname: 'Spot'})
+    setCurrentSpot({region_name: 'Spot'})
     if (!currentSpot) {
       return;
     }
