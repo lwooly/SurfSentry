@@ -14,6 +14,10 @@ import styles from './styles.module.scss'
 import StyledOption from "@src/components/global/StyledOption";
 import SlideButton from "@src/components/global/SlideButton";
 
+interface SelectPlaceholder {
+region_name: string;
+}
+
 
 const SelectForecastForm = ({
   surfSpotsData,
@@ -42,19 +46,19 @@ const SelectForecastForm = ({
   const isServerError =
     isSurfSpotsServerError && isRegionsServerError ? true : false;
 
-  const [currentRegion, setCurrentRegion] = useState<Region | null>(null);
-  const [currentSubRegion, setCurrentSubRegion] = useState<Region | null>(null);
-  const [currentSpot, setCurrentSpot] = useState<SurfSpot | null>(null);
+  const [currentRegion, setCurrentRegion] = useState<Region | SelectPlaceholder>({region_name:'Country'});
+  const [currentSubRegion, setCurrentSubRegion] = useState<Region | SelectPlaceholder>({region_name:'Region'});
+  const [currentSpot, setCurrentSpot] = useState<SurfSpot | SelectPlaceholder>({region_name: 'Spot'});
 
   const handleRegionChange = (region: Region) => {
     setCurrentRegion(region);
-    setCurrentSubRegion(null)
-    setCurrentSpot(null)
+    setCurrentSubRegion({region_name:'Region'})
+    setCurrentSpot({region_name: 'Spot'})
   };
 
   const handleSubRegionChange = (subRegion: Region) => {
     setCurrentSubRegion(subRegion);
-    setCurrentSpot(null)
+    setCurrentSpot({region_name: 'Spot'})
   };
 
   const handleSpotChange = (spot: SurfSpot) => {
@@ -63,7 +67,7 @@ const SelectForecastForm = ({
 
   const monitorNewForecast = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setCurrentSpot(null)
+    setCurrentSpot({spotname: 'Spot'})
     if (!currentSpot) {
       return;
     }
