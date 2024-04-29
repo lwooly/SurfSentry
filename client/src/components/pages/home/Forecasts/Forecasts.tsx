@@ -13,6 +13,8 @@ const Forecasts = ({surfSpotsData}:{surfSpotsData: UseSurfSpotsReturn}) => {
   //TODO: handle locaing errors etc.
   const { surfSpots, isLoading, isServerError, refetch } = surfSpotsData;
 
+  const userSurfSpots = surfSpots?.filter(({user_id}) => user_id === user?.sub)
+
   return (
     <div className={styles.forecastComponent}>
       {user && !isLoading && !isServerError && (
@@ -27,9 +29,7 @@ const Forecasts = ({surfSpotsData}:{surfSpotsData: UseSurfSpotsReturn}) => {
               </div>
             </div>
 
-            {surfSpots?.map(({ spotname, user_id, surfline_id }, index) => (
-              <>
-                {user_id === user.sub ? (
+            {userSurfSpots && userSurfSpots?.length > 0 ? (userSurfSpots?.map(({ spotname, user_id, surfline_id }, index) => (
                   <li key={`${spotname}-${user_id}-${index}`} className={styles.forecastRow}>
                     <div className={styles.col1}>
                       <h5 >{spotname}</h5>
@@ -51,11 +51,16 @@ const Forecasts = ({surfSpotsData}:{surfSpotsData: UseSurfSpotsReturn}) => {
                       </button>
                     </div>
                   </li>
-                ) : (
-                  null
-                )}
-              </>
-            ))}
+            ))) : (
+              <li className={styles.forecastRow}>
+                <div className={styles.col1}>
+                      <h5 >No forecasts selected....</h5>
+                    </div>
+                    <div className={styles.col2}>
+
+                    </div>
+              </li>
+            )}
           </div>
         </div>
       )}
