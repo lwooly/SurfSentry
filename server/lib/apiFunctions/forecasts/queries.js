@@ -1,6 +1,5 @@
 import * as db from "../../../db/index.js";
 
-
 export const getAllForecastsFromDB = async () => {
     const data = await db.query(`SELECT * FROM forecasts;`)
     return data.rows
