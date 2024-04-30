@@ -10,6 +10,14 @@
     background-color: lightblue;
     padding: 80px 80px;
     border-radius: 1em;
+
+    @media (max-width:480px) {
+      width: 100%;
+      margin:0;
+      padding: 0;
+      border-radius: 0;;
+      
+  }
   }
 
   .content {

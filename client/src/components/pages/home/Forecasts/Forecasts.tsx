@@ -89,15 +89,14 @@ const Forecasts = ({
                     <div className={styles.col}>
                         {forecast.forecast[0] ? (
                         <>
-                          <p>{forecast.forecast[0].am.rating}</p>
+                          <p className={styles.rating}>{forecast.forecast[0].am.rating}</p>
                           <p>{forecast.forecast[0].observation}</p>
 
                         </>) : <p>Data not available for this location</p> }
                     </div>
                     <div className={styles.col}>
-
                      {nextGood ? (<div>
-                        <p>{nextGood?.rating} - {nextGood.dateString} {nextGood?.dayPeriod.toUpperCase()}</p>
+                        <p className={styles.rating}>{nextGood?.rating} - {nextGood.dateString} {nextGood?.dayPeriod.toUpperCase()}</p>
                         <p>{nextGood?.observation}</p>
                       </div>) : <p>No good forecasts...</p>}
 

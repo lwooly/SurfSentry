@@ -13,6 +13,11 @@
     }
     .logoText{
         height: 35px;
+
+        @media (max-width:768px) {
+            display: none;
+            
+        }
     }
     p {
         font-size: x-large;

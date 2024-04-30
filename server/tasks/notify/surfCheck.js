@@ -32,14 +32,17 @@ export const surfCheck = async () => {
   spotForecasts.map(async (forecast) => {
     try {
       const res = await addForecasttoDB(forecast);
-      console.log('Forecasts added to database')
+      // console.log('Forecasts added to database')
     }catch (err){
-      console.log(`Could not add ${forecast.spotname} forecast to db`, err)
+      console.log(`Could not add ${forecast?.spotname} forecast to db`, err)
     }
   })
 
   //check spot forecast data for any good or epic ratings and return these only
+
+  //TODO - check why this isnt returning anything?
   const goodForecasts = checkForecast(spotForecasts)
+  console.log(goodForecasts)
 
 //send notifications to good forecasts
   const spotSurflineIds = goodForecasts ? goodForecasts.map(forecast => forecast?.surfline_id) : [];

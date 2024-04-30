@@ -20,12 +20,13 @@
 
     .forecastRow {
         display: flex;
-        gap: 32px;
+        // justify-content: space-evenly;
+        gap: 50px;
         list-style-type: none;
         border-bottom: lightgrey solid 1px;
         border-bottom: lightgrey solid 1px;
         // border: solid 2px lightcoral;
-        padding: 1rem 5rem 1rem 1rem;
+        padding: 1rem;
         margin-bottom: 10px;
 
         h5 {
@@ -35,17 +36,29 @@
         }
         
         .col {
-            width: 25%
+            // width: 20%;
+            flex: 1;
+
+            &:last-child {
+                margin-left: auto;
+                width: 10%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                
+            }
+
+            .rating {
+                font-size: 16px;
+                font-weight: 600;
+            }
+
+            p {
+                font-size: 14px;
+            }
         }
 
-        .col:last-child {
-            margin-left: auto;
-            width: 10%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            
-        }
+       
 
         .removeIcon {
             background: transparent;

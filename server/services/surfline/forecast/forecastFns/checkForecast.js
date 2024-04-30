@@ -2,8 +2,10 @@
 const checkForecast = (spotForecasts) => {
   const goodForecasts = [];
 
+  //TODO not running properly
   // limit to 3 days TODO
   spotForecasts.forEach((forecastObj) => {
+    
     forecastObj?.forecast.forEach((forecast, index) => {
       // check am forecast
       if (
