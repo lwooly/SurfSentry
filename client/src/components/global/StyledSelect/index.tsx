@@ -102,9 +102,6 @@ const StyledSelect: FC<Props> = ({ options, onChange, parent, current }) => {
       setIsDisabled(true);
     }
   }, [dropDownOptions]);
-  console.log(dropDownOptions)
-
-  console.log(isDisabled)
 
   return (
     <div className={styles.selectContainer}>

@@ -10,8 +10,6 @@ export async function sendPushNotification(req, res) {
     //get subscribers from DB
     const subscriptions = await getSWSubscriptionsFromDB();
 
-    console.log('subscirptions', subscriptions)
-
     await sendNotifications(subscriptions)
     //Send success response
     res.json({

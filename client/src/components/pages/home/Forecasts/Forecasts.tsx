@@ -1,18 +1,34 @@
-import React, { useEffect, useState } from "react";
+
 import styles from "./styles.module.scss";
 import useAccessToken from "@src/hooks/useAccessToken";
 import { useAuth0 } from "@auth0/auth0-react";
-import { UseSurfSpotsReturn } from "@src/hooks/useSurfSpots";
+import { SurfSpot, UseSurfSpotsReturn } from "@src/hooks/useSurfSpots";
 import { unSubscribeUserToSpot } from "@src/api/spots";
-import createUser from "@src/api/users";
-import useForecasts from "@src/hooks/useForecasts";
+import useForecasts, { Forecast } from "@src/hooks/useForecasts";
+import { nextGoodForecast } from "@src/lib/forecasts/nextGoodForecast";
+
+interface NextGoodForecast {
+    forecastDay: string;
+    observation: string;
+    rating: string;
+    dayPeriod: string;
+    dateString: string;
+
+} 
+
+interface SpotForecast {
+  forecast: Forecast;
+  spot: SurfSpot;
+  nextGood: NextGoodForecast | null;
+  
+}
 
 const Forecasts = ({
   surfSpotsData,
 }: {
   surfSpotsData: UseSurfSpotsReturn;
 }) => {
-  const { user, isAuthenticated } = useAuth0();
+  const { user } = useAuth0();
   const { accessToken } = useAccessToken();
 
   //TODO: handle locaing errors etc.
@@ -23,6 +39,20 @@ const Forecasts = ({
   );
 
   const { forecasts } = useForecasts();
+
+  // Show surf spots user is subscribed to.
+  const userForecasts:Array<SpotForecast>= [];
+
+  userSurfSpots?.forEach((spot) => {
+    forecasts?.forEach((forecast) => {
+      if (forecast.spot_id === spot.surfline_id) {
+
+        //find when forecast is next good for this spot
+        const nextGood = nextGoodForecast(forecast)
+        userForecasts.push({ spot, forecast, nextGood });
+      }
+    });
+  });
 
   return (
     <div className={styles.forecastComponent}>
@@ -37,7 +67,7 @@ const Forecasts = ({
                 <h4>Current</h4>
               </div>
               <div className={styles.col}>
-                <h4>Next Good</h4>
+                <h4>Future</h4>
               </div>
               <div className={styles.col}>
                 <h4 className={`${styles.titleRow} ${styles.forecastRow}`}>
@@ -46,31 +76,39 @@ const Forecasts = ({
               </div>
             </div>
 
-            {userSurfSpots && userSurfSpots?.length > 0 ? (
-              userSurfSpots?.map(
-                ({ spotname, user_id, surfline_id }, index) => (
+            {userForecasts && userForecasts?.length > 0 ? (
+              userForecasts?.map(
+                ({ spot, forecast, nextGood }) => (
                   <li
-                    key={`${spotname}-${user_id}-${index}`}
+                    key={spot.surfline_id}
                     className={styles.forecastRow}
                   >
                     <div className={styles.col}>
-                      <h5>{spotname}</h5>
+                      <h5>{spot.spotname}</h5>
                     </div>
                     <div className={styles.col}>
-                      {forecasts?.map((forecast) => {
-                        if (forecast.spot_id === surfline_id) {
-                          return <p>{forecast.forecast[0].observation}</p>;
-                        }
-                      })}
+                        {forecast.forecast[0] ? (
+                        <>
+                          <p>{forecast.forecast[0].am.rating}</p>
+                          <p>{forecast.forecast[0].observation}</p>
+
+                        </>) : <p>Data not available for this location</p> }
                     </div>
-                    <div className={styles.col}></div>
+                    <div className={styles.col}>
+
+                     {nextGood ? (<div>
+                        <p>{nextGood?.rating} - {nextGood.dateString} {nextGood?.dayPeriod.toUpperCase()}</p>
+                        <p>{nextGood?.observation}</p>
+                      </div>) : <p>No good forecasts...</p>}
+
+                    </div>
                     <div className={styles.col}>
                       <button
                         aria-label="unsubcribe"
                         className={` ${styles.removeIcon}`}
                         onClick={async () => {
                           await unSubscribeUserToSpot({
-                            spotId: surfline_id,
+                            spotId: spot.surfline_id,
                             userId: user.sub,
                             accessToken: accessToken,
                           });

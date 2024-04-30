@@ -9,7 +9,7 @@ interface WaveAttributes {
     observation: string;
     occasionalHeight: number | null;
     plus: boolean;
-    rating: number | null;
+    rating: string | null;
     timestamp: number;
 }
 
@@ -24,7 +24,7 @@ interface DailyForecast {
     pm: WaveAttributes;
 }
 
-interface CompleteForecast {
+export interface Forecast {
     forecast: DailyForecast[];
     spot_id: string;
 }
@@ -36,7 +36,7 @@ interface CompleteForecast {
 const useForecasts = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isServerError, setIsServerError] = useState<boolean>(false);
-  const [forecasts, setForecasts] = useState<CompleteForecast[] | null>(null);
+  const [forecasts, setForecasts] = useState<Forecast[] | null>(null);
 
   const { getAccessTokenSilently } = useAuth0();
 
@@ -49,6 +49,8 @@ const useForecasts = () => {
       if (!accessToken) {
         throw new Error("Access token not found");
       }
+
+      //TODO - filter forecasts by user subscription
       const res = await getForecasts(accessToken);
       console.log("forecasts fetched successfully", res);
       setForecasts(res.data);

@@ -4,7 +4,7 @@ const checkForecast = (spotForecasts) => {
 
   // limit to 3 days TODO
   spotForecasts.forEach((forecastObj) => {
-    forecastObj.forecast.forEach((forecast, index) => {
+    forecastObj?.forecast.forEach((forecast, index) => {
       // check am forecast
       if (
         forecast.am.rating === "POOR" ||
