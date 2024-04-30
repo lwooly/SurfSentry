@@ -21,20 +21,32 @@ const Forecasts = ({surfSpotsData}:{surfSpotsData: UseSurfSpotsReturn}) => {
         <div className={styles.contentWrapper}>
           <div className={styles.content}>
             <div className={`${styles.titleRow} ${styles.forecastRow}`}>
-              <div className={styles.col1}>
+              <div className={styles.col}>
                 <h2 >Forecasts</h2>
               </div>
-              <div className={styles.col2}>
+              <div className={styles.col}>
+                <h4 >Current</h4>
+              </div>
+              <div className={styles.col}>
+                <h4 >Next Good</h4>
+              </div>
+              <div className={styles.col}>
                 <h4 className={`${styles.titleRow} ${styles.forecastRow}`}>Unsubscribe</h4>
               </div>
             </div>
 
             {userSurfSpots && userSurfSpots?.length > 0 ? (userSurfSpots?.map(({ spotname, user_id, surfline_id }, index) => (
                   <li key={`${spotname}-${user_id}-${index}`} className={styles.forecastRow}>
-                    <div className={styles.col1}>
+                    <div className={styles.col}>
                       <h5 >{spotname}</h5>
                     </div>
-                    <div className={styles.col2}>
+                    <div className={styles.col}>
+
+                    </div>
+                    <div className={styles.col}>
+
+                    </div>
+                    <div className={styles.col}>
                       <button
                       aria-label="unsubcribe"
                       className={` ${styles.removeIcon}`}

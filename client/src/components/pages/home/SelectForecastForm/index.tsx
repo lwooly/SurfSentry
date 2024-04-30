@@ -57,6 +57,7 @@ const SelectForecastForm = ({
   };
 
   const handleSubRegionChange = (subRegion: Region) => {
+    console.log(subRegion)
     setCurrentSubRegion(subRegion);
     setCurrentSpot({region_name: 'Spot'})
   };

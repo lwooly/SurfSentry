@@ -72,3 +72,10 @@ CREATE TABLE
         enumerated_path VARCHAR,
         subregion_id VARCHAR
     );
+
+    CREATE TABLE forecasts (
+        spot_id VARCHAR(300) NOT NULL,
+        forecast JSONB NOT NULL,
+        PRIMARY KEY(spot_id),
+        FOREIGN KEY (spot_id) REFERENCES spots (surfline_id)
+    );

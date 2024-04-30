@@ -1,4 +1,5 @@
 import { getSpotSubscriptionsFromDB } from "../../lib/apiFunctions/SWsubscriptions/queries.js";
+import { addForecasttoDB } from "../../lib/apiFunctions/forecasts/queries.js";
 import { getSurfSpotsFromDB } from "../../lib/apiFunctions/surfSpots/queries.js";
 import checkForecast from "../../services/surfline/forecast/forecastFns/checkForecast.js";
 import fetchSurflineForecast from "../../services/surfline/forecast/getForecast.js";
@@ -19,24 +20,29 @@ export const surfCheck = async () => {
       try {
         const forecast = await fetchSurflineForecast(surfline_id);
 
-        //add spot name to forecast objects for reference
-        forecast.map((items) => {
-          items.spotname = spotname;
-          return items;
-        });
-
-        //check spot forecast data for any good or epic ratings and return these only
-        const goodForecast = checkForecast(forecast);
-
         //return a forecast object for each spot
-        return { spotname, surfline_id, goodForecast };
+        return { spotname, surfline_id, forecast };
       } catch (error) {
         console.log("Could not fetch surfline forecast:", error.message);
       }
     })
   );
 
-  const spotSurflineIds = spotForecasts ? spotForecasts.map(forecast => forecast?.surfline_id) : [];
+  // save spot forecasts to db for client reference
+  spotForecasts.map(async (forecast) => {
+    try {
+      const res = await addForecasttoDB(forecast);
+      console.log('Forecasts added to database')
+    }catch (err){
+      console.log(`Could not add ${forecast.spotname} forecast to db`, err)
+    }
+  })
+
+  //check spot forecast data for any good or epic ratings and return these only
+  const goodForecasts = checkForecast(spotForecasts)
+
+//send notifications to good forecasts
+  const spotSurflineIds = goodForecasts ? goodForecasts.map(forecast => forecast?.surfline_id) : [];
 
   if (spotSurflineIds.length === 0) {
     console.log('No data available or error in fetching data');
@@ -48,3 +54,5 @@ export const surfCheck = async () => {
   // notify them users - subscriptions.
   sendNotifications(subscriptions);
 };
+
+// surfCheck()

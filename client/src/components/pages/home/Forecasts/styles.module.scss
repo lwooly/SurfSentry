@@ -15,7 +15,6 @@
             letter-spacing: -2.4px;
             font-size:3.125rem;
             margin-bottom: 0;
-
         }
     }
 
@@ -28,21 +27,17 @@
         padding: 1rem 5rem 1rem 1rem;
         margin-bottom: 10px;
 
-       
         h5 {
             font-size: 1.5rem;
             font-weight: 700;
             letter-spacing: -1px;
-
-            
         }
-
         
-        .col1 {
-            width: 33%
+        .col {
+            width: 25%
         }
 
-        .col2 {
+        .col:last-child {
             margin-left: auto;
             width: 10%;
             display: flex;
