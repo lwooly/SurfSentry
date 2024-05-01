@@ -1,31 +1,26 @@
 .forecastComponent {
-
     .contentWrapper {
-        padding: 16px
-
+        padding: 16px;
     }
     ul {
         margin: 0;
-        padding:0;
+        padding: 0;
     }
 
     .content {
         h2 {
-            font-weight:700;
+            font-weight: 700;
             letter-spacing: -2.4px;
-            font-size:3.125rem;
+            font-size: 3.125rem; 
             margin-bottom: 0;
         }
     }
 
     .forecastRow {
         display: flex;
-        // justify-content: space-evenly;
-        gap: 50px;
+        gap: 20px; 
         list-style-type: none;
         border-bottom: lightgrey solid 1px;
-        border-bottom: lightgrey solid 1px;
-        // border: solid 2px lightcoral;
         padding: 1rem;
         margin-bottom: 10px;
 
@@ -36,8 +31,7 @@
         }
         
         .col {
-            // width: 20%;
-            flex: 1;
+            flex: 1; 
 
             &:last-child {
                 margin-left: auto;
@@ -45,7 +39,6 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                
             }
 
             .rating {
@@ -58,11 +51,9 @@
             }
         }
 
-       
-
         .removeIcon {
             background: transparent;
-            border:0;
+            border: 0;
             border-radius: 50%;
             height: 50px;
             width: 50px;
@@ -74,10 +65,10 @@
         }
     }
 
-    .titleRow{
+    .titleRow {
         align-items: end;
         h4 {
-            font-size: 1rem;
+            font-size: 1rem; 
             font-weight: 700;
             letter-spacing: -1px;
             border-bottom: none;
@@ -86,5 +77,25 @@
         }
     }
 
-    
+    @media (max-width: 480px) {
+        .forecastRow {
+            flex-direction: column;
+            gap: 10px;
+
+            .col {
+                width: 100%;
+                display: block;
+
+                &:last-child {
+                    width: auto;
+                }
+            }
+        }
+
+        .content {
+            h2 {
+                font-size: 2rem; 
+            }
+        }
+    }
 }

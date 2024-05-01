@@ -10,10 +10,15 @@
     color: black;
     background-color: #fff;
 
-
     &:hover {
         filter: invert(1);
         cursor: pointer;
+    }
+
+
+    @media (max-width:480px) {
+        font-size: 45px;
+        
     }
 
 }

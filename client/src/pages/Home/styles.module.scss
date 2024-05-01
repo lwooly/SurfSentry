@@ -1,7 +1,11 @@
 .home {
   width: 100%;
   min-height: 100vh;
-  margin: 0px 1rem;
+  // margin: 0px 1rem;
+
+  @media (max-width:480px) {
+    margin:0
+  }
 
   .contentContainer {
     width: 80%;
@@ -13,9 +17,9 @@
 
     @media (max-width:480px) {
       width: 100%;
-      margin:0;
-      padding: 0;
-      border-radius: 0;;
+      margin:100px 0;
+      padding: 80px 16px;
+      border-radius: 0;
       
   }
   }
@@ -51,6 +55,11 @@
           calc(100% / 3) 100% space;
         clip-path: inset(0 100% 0 0);
         animation: l1 1s steps(4) infinite;
+
+        @media (max-width:1000px) {
+          display: none;
+          
+        }
       }
       @keyframes l1 {
         to {

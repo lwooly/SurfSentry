@@ -49,6 +49,11 @@
         }
     }
 
+    @media (max-width:480px) {
+        scale: 0.75;
+        
+    }
+
 }
 
 .isBlue {
