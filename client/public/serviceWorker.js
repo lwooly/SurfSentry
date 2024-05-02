@@ -56,7 +56,11 @@ self.addEventListener("activate", async () => {
 });
 
 // show notification from push manager
-self.addEventListener("push", (e) => {
-  const data = e.data.text();
-  self.registration.showNotification("test", { body: data });
+self.addEventListener("push", async (e) => {
+  const data = await e.data.json();
+  self.registration.showNotification("SurfSentry", { 
+    body:data.body,
+    icon:data.image,
+    vibrate:[200, 100, 200]
+  });
 });
