@@ -1,16 +1,21 @@
-import { timeStamp } from "console"
 
-export const timestampToDateString = (timestamp:number) => {
+export const timestampToDateString = (timestampInSeconds:number) => {
 
-    const date = new Date(timestamp)
+    // Validate the timestamp input
+    if (typeof timestampInSeconds !== 'number' || Number.isNaN(timestampInSeconds)) {
+        throw new Error('Invalid timestamp provided');
+    }
+    const date = new Date(timestampInSeconds * 1000)
 
-    const options = {
+    const options:Intl.DateTimeFormatOptions = {
         weekday: 'long',
         day: 'numeric',
         month: 'long'
     }
 
-    const formattedDate = date.toLocaleDateString('en-GB', options)
+    const formattedDate = date.toLocaleDateString('en-GB',options)
+
+    console.log(formattedDate)
 
     return formattedDate;
 }

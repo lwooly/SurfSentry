@@ -118,10 +118,6 @@
           width: 100%;
           display: block;
   
-          &:first-child, &:nth-child(2) {
-            border-bottom: 1px solid lightgrey;
-          }
-  
           &:last-child {
             width: auto;
           }
@@ -149,7 +145,7 @@
       }
   
       .titleRow {
-        h2, h4 {
+       h4 {
           margin: 0;
           display: none;
         }

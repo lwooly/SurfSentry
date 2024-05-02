@@ -1,11 +1,11 @@
 import { Forecast } from "@src/hooks/useForecasts";
-import { timeStamp } from "console";
 import { timestampToDateString } from "../date";
 
 //find time and date of next good forecast
 export const nextGoodForecast = (forecast: Forecast) => {
   for (let i = 0; i < forecast.forecast.length; i += 1) {
     const day = forecast.forecast[i];
+
     if (
       day.am.rating &&
       // day.am.rating === "POOR" ||

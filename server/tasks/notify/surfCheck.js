@@ -32,7 +32,7 @@ export const surfCheck = async () => {
   spotForecasts.map(async (forecast) => {
     try {
       const res = await addForecasttoDB(forecast);
-      // console.log('Forecasts added to database')
+      console.log(`Forecast added to database`, forecast.spotname)
     }catch (err){
       console.log(`Could not add ${forecast?.spotname} forecast to db`, err)
     }
@@ -54,7 +54,7 @@ export const surfCheck = async () => {
   //get users who subscribe to this spot.
   const subscriptions = await getSpotSubscriptionsFromDB(spotSurflineIds);
 
-  // notify them users - subscriptions.
+  // notify the users - subscriptions.
   sendNotifications(subscriptions);
 };
 
