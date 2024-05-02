@@ -66,4 +66,4 @@ export const surfCheck = async () => {
   
 };
 
-surfCheck()
+// surfCheck()
