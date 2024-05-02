@@ -41,7 +41,7 @@ const Home = () => {
             </div>
            
             }
-            {/* <SendNotificationsButton /> */}
+            <SendNotificationsButton />
             <EnableNotifications />
 
             {!enableNotifyVisible && <SelectForecastForm surfSpotsData={surfSpotsData} />}

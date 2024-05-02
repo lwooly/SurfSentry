@@ -7,6 +7,7 @@ await Promise.all(
     subscriptions.map(async ({ data: subscription }) => {
       try {
         await sendWebpushNotification(subscription, "testing message");
+
       } catch (err) { // manage error from unsubcribed here
         console.log(err.statusCode);
         //unsubscribe if 410 status recieved (Gone - expired or unsubscribed)
@@ -17,5 +18,6 @@ await Promise.all(
       }
     })
   );
+  "webpush notifications sent to subscribers"
 
 }

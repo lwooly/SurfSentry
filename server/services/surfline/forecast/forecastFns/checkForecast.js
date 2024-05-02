@@ -5,7 +5,6 @@ const checkForecast = (spotForecasts) => {
   //TODO not running properly
   // limit to 3 days TODO
   spotForecasts.forEach((forecastObj) => {
-    
     forecastObj?.forecast.forEach((forecast, index) => {
       // check am forecast
       if (
@@ -14,7 +13,11 @@ const checkForecast = (spotForecasts) => {
         forecast.am.rating === "GOOD" ||
         forecast.am.rating === "EPIC"
       ) {
-        goodForecasts.push(forecast);
+        goodForecasts.push({
+          forecast,
+          spotname: forecastObj.spotname,
+          surfline_id: forecastObj.surfline_id,
+        });
       }
       // TODO: Check pm forecasts
       // TODO: Split forecast object into am and pm?

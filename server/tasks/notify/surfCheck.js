@@ -30,9 +30,11 @@ export const surfCheck = async () => {
 
   // save spot forecasts to db for client reference
   spotForecasts.map(async (forecast) => {
+
     try {
       const res = await addForecasttoDB(forecast);
-      console.log(`Forecast added to database`, forecast.spotname)
+      // console.log(`Forecast added to database`, forecast.spotname)
+      // console.log('forecasts added to db')
     }catch (err){
       console.log(`Could not add ${forecast?.spotname} forecast to db`, err)
     }
@@ -42,20 +44,26 @@ export const surfCheck = async () => {
 
   //TODO - check why this isnt returning anything?
   const goodForecasts = checkForecast(spotForecasts)
-  console.log(goodForecasts)
 
 //send notifications to good forecasts
   const spotSurflineIds = goodForecasts ? goodForecasts.map(forecast => forecast?.surfline_id) : [];
 
   if (spotSurflineIds.length === 0) {
     console.log('No data available or error in fetching data');
+  } else {
+    console.log('sending notifications for ', spotSurflineIds.length, 'spots')
   }
-
   //get users who subscribe to this spot.
   const subscriptions = await getSpotSubscriptionsFromDB(spotSurflineIds);
 
+  console.log('spot subscribers:' , subscriptions.length)
+
   // notify the users - subscriptions.
-  sendNotifications(subscriptions);
+  await sendNotifications(subscriptions);
+
+
+  console.log('notifications sent')
+  
 };
 
-// surfCheck()
+surfCheck()
