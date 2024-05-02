@@ -84,21 +84,30 @@ const Forecasts = ({
                     className={styles.forecastRow}
                   >
                     <div className={styles.col}>
+                    
                       <h5>{spot.spotname}</h5>
                     </div>
                     <div className={styles.col}>
+                      <div className={styles.forecastHeading}>
+                      <h4>Current: </h4>
+                      {forecast.forecast[0] && (
+                          <p className={styles.rating}>{forecast.forecast[0].am.rating}</p>)}
+                      </div>
                         {forecast.forecast[0] ? (
                         <>
-                          <p className={styles.rating}>{forecast.forecast[0].am.rating}</p>
                           <p>{forecast.forecast[0].observation}</p>
 
                         </>) : <p>Data not available for this location</p> }
                     </div>
                     <div className={styles.col}>
-                     {nextGood ? (<div>
-                        <p className={styles.rating}>{nextGood?.rating} - {nextGood.dateString} {nextGood?.dayPeriod.toUpperCase()}</p>
+                    <div className={styles.forecastHeading}>
+                    <h4>Future: </h4>
+                    {nextGood && (
+                        <p className={styles.rating}>{nextGood?.rating} - {nextGood.dateString} {nextGood?.dayPeriod.toUpperCase()}</p>)}
+                    </div>
+                     {nextGood ? (
                         <p>{nextGood?.observation}</p>
-                      </div>) : <p>No good forecasts...</p>}
+                ) : <p>No good forecasts...</p>}
 
                     </div>
                     <div className={styles.col}>

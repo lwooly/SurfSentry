@@ -1,101 +1,159 @@
 .forecastComponent {
     .contentWrapper {
-        padding: 16px;
+      padding: 16px;
     }
+  
     ul {
-        margin: 0;
-        padding: 0;
+      margin: 0;
+      padding: 0;
     }
-
+  
     .content {
-        h2 {
-            font-weight: 700;
-            letter-spacing: -2.4px;
-            font-size: 3.125rem; 
-            margin-bottom: 0;
-        }
+      h2 {
+        font-weight: 700;
+        letter-spacing: -2.4px;
+        font-size: 3.125rem;
+        margin-bottom: 0;
+      }
     }
-
+  
     .forecastRow {
+      position: relative;
+      display: flex;
+      gap: 20px;
+      list-style-type: none;
+      border-bottom: 1px solid lightgrey;
+      padding: 1rem;
+      margin-bottom: 10px;
+  
+      h5 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        letter-spacing: -1px;
+        margin: 0;
+      }
+  
+      .col {
+        flex: 1;
         display: flex;
-        gap: 20px; 
-        list-style-type: none;
-        border-bottom: lightgrey solid 1px;
-        padding: 1rem;
-        margin-bottom: 10px;
-
-        h5 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            letter-spacing: -1px;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0 16px;
+  
+        &:last-child {
+          margin-left: auto;
+          width: 10%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
-        
-        .col {
-            flex: 1; 
-
-            &:last-child {
-                margin-left: auto;
-                width: 10%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-
-            .rating {
-                font-size: 16px;
-                font-weight: 600;
-            }
-
-            p {
-                font-size: 14px;
-            }
+  
+        .rating {
+          font-size: 16px;
+          font-weight: 600;
         }
-
-        .removeIcon {
-            background: transparent;
-            border: 0;
-            border-radius: 50%;
-            height: 50px;
-            width: 50px;
-
-            &:hover {
-                cursor: pointer;
-                background-color: lightblue;
-            }
+  
+        p {
+          font-size: 14px;
         }
+  
+        .forecastHeading {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+  
+          h4 {
+            display: none;
+          }
+        }
+      }
+  
+      .removeIcon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        border: 0;
+        border-radius: 50%;
+        height: 40px;
+        width: 40px;
+        opacity: 40%;
+
+        img {
+            height: 20px;
+            width: 20px;
+        }
+  
+        &:hover {
+          cursor: pointer;
+          background-color: lightblue;
+        }
+      }
     }
-
+  
     .titleRow {
-        align-items: end;
-        h4 {
-            font-size: 1rem; 
-            font-weight: 700;
-            letter-spacing: -1px;
-            border-bottom: none;
-            padding: 0;
-            margin-bottom: 0;
-        }
+      align-items: end;
+  
+      h4 {
+        font-size: 1rem;
+        font-weight: 700;
+        letter-spacing: -1px;
+        border-bottom: none;
+        padding: 0;
+        margin-bottom: 0;
+      }
+  
+      .col {
+        border-bottom: none;
+      }
     }
-
+  
     @media (max-width: 480px) {
-        .forecastRow {
-            flex-direction: column;
-            gap: 10px;
-
-            .col {
-                width: 100%;
-                display: block;
-
-                &:last-child {
-                    width: auto;
-                }
+      .forecastRow {
+        border-bottom: 2px solid lightgrey;
+        flex-direction: column;
+        gap: 0px;
+  
+        .col {
+          width: 100%;
+          display: block;
+  
+          &:first-child, &:nth-child(2) {
+            border-bottom: 1px solid lightgrey;
+          }
+  
+          &:last-child {
+            width: auto;
+          }
+  
+          .forecastHeading {
+            h4 {
+              display: block;
+              font-size: 14px;
             }
+          }
         }
-
-        .content {
-            h2 {
-                font-size: 2rem; 
-            }
+  
+        .removeIcon {
+          position: absolute;
+          top: 0;
+          right: 0;
+          transform: translate(-100%, 25%);
         }
+      }
+  
+      .content {
+        h2 {
+          font-size: 2rem;
+        }
+      }
+  
+      .titleRow {
+        h2, h4 {
+          margin: 0;
+          display: none;
+        }
+      }
     }
-}
+  }
+  
