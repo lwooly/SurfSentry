@@ -1,9 +1,11 @@
 import 'dotenv/config';
-import server from "./server.js";
+import app from "./server.js";
 import './tasks/tasks.js'
 
 const {PORT = 3000, NODE_ENV = 'development'} = process.env;
 
-server.listen(PORT, () => {
+app.listen(PORT, () => {
     console.log(`Server running on port http://localhost:${PORT}`)
 });
+
+module.exports = app;

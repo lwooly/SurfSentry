@@ -17,7 +17,7 @@ await Promise.all(
 
       } catch (err) { // manage error from unsubcribed here
         console.log(err.statusCode);
-        console.log(err)
+        // console.log(err)
         //unsubscribe if 410 status recieved (Gone - expired or unsubscribed)
         if (err.statusCode === 410) {
           //TODO - add id to db query and use it to remove db instances for subscriptions that have gone.
