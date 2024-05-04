@@ -1,18 +1,18 @@
 import axios from "axios";
 
 interface surfSpotConfig {
-  accessToken:string;
-  userId?:string;
+  accessToken: string;
+  userId?: string;
 }
 
-export const getSurfSpots= async ({
+export const getSurfSpots = async ({
   accessToken,
   userId = "",
-}:surfSpotConfig) => {
-  console.log(userId)
+}: surfSpotConfig) => {
+  console.log(userId);
   // Fetch all surfspots
   // If a user id is present fetch data for user subscription
-  const url =`${import.meta.env.VITE_API_URL}/surf-spots/${userId}`;
+  const url = `${import.meta.env.VITE_API_URL}/surf-spots/${userId}`;
 
   const res = await axios.get(url, {
     headers: {
@@ -22,7 +22,15 @@ export const getSurfSpots= async ({
   return res;
 };
 
-export const subscribeUserToSpot = async ({ spotId, userId, accessToken }) => {
+export const subscribeUserToSpot = async ({
+  spotId,
+  userId,
+  accessToken,
+}: {
+  spotId: string;
+  userId: string;
+  accessToken: string;
+}) => {
   const res = await axios.post(
     `${import.meta.env.VITE_API_URL}/surf-spots/${spotId}/subscribe/${userId}`,
     { userId },
@@ -39,6 +47,10 @@ export const unSubscribeUserToSpot = async ({
   spotId,
   userId,
   accessToken,
+}: {
+  spotId: string;
+  userId: string;
+  accessToken: string;
 }) => {
   const res = await axios.delete(
     `${import.meta.env.VITE_API_URL}/surf-spots/${spotId}/subscribe/${userId}`,

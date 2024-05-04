@@ -1,6 +1,11 @@
 import { ReactNode, createContext, useState } from "react";
 
-export const NotificationVisibilityContext = createContext({
+interface NotificationVisibilityContextType {
+    enableNotifyVisible: boolean;
+    setEnableNotifyVisible: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export const NotificationVisibilityContext = createContext<NotificationVisibilityContextType>({
     enableNotifyVisible: true,
     setEnableNotifyVisible: () => {}
 })

@@ -2,7 +2,6 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 import { LoginButton } from "@src/components/auth0/loginButton";
 import { LogoutButton } from "@src/components/auth0/logoutButton";
-import React from "react";
 
 import styles from "./styles.module.scss"
 

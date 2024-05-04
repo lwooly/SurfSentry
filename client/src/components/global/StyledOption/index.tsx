@@ -1,5 +1,4 @@
 import styles from "./styles.module.scss";
-import { Option } from "../StyledSelect";
 import { Region } from "@src/hooks/useRegions";
 import { SurfSpot } from "@src/hooks/useSurfSpots";
 
