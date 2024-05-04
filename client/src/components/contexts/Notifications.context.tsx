@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { ReactNode, createContext, useState } from "react";
 
 export const NotificationVisibilityContext = createContext({
     enableNotifyVisible: true,
@@ -6,8 +6,8 @@ export const NotificationVisibilityContext = createContext({
 })
 
 
-export const NotificationVisibilityProvider = ({children}) => {
-    const [enableNotifyVisible, setEnableNotifyVisible] = useState(true);
+export const NotificationVisibilityProvider = ({children}:{children: ReactNode}) => {
+    const [enableNotifyVisible, setEnableNotifyVisible] = useState<boolean>(true);
 
     const contextValues = {
         enableNotifyVisible,

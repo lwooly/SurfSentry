@@ -1,5 +1,4 @@
 import enableNotifications from "@src/lib/serviceWorker/enableNotifications";
-import ButtonWithArrow from "../ButtonWithArrow";
 import { useContext, useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import useAccessToken from "@src/hooks/useAccessToken";
@@ -19,7 +18,9 @@ const EnableNotifications = () => {
     const { accessToken } = useAccessToken()
 
     const handleClick = async () => {
-        await enableNotifications(user.sub, accessToken)
+      if (user?.sub && accessToken) {
+        await enableNotifications(user?.sub, accessToken)
+      }
         setClicked(!clicked)
     }
 
@@ -27,7 +28,7 @@ const EnableNotifications = () => {
         if (Notification.permission === 'granted') {
           setEnableNotifyVisible(false)
         }
-    },[clicked])
+    },[clicked, setEnableNotifyVisible])
     
   return (
     <div className={styles.enableNotifications}>

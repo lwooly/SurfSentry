@@ -1,6 +1,5 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { getRegions } from "@src/api/regions";
-import { all } from "node_modules/axios/index.d.cts";
 import { useCallback, useEffect, useState } from "react";
 
 export interface Region {

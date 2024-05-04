@@ -2,7 +2,6 @@ import EnableNotifications from "@src/components/global/EnableNotifications";
 import { useAuth0 } from "@auth0/auth0-react";
 import Forecasts from "@src/components/pages/home/Forecasts/Forecasts";
 import useSurfSpots from "@src/hooks/useSurfSpots";
-import useAccessToken from "@src/hooks/useAccessToken";
 import SelectForecastForm from "@src/components/pages/home/SelectForecastForm";
 
 import styles from "./styles.module.scss";
@@ -19,8 +18,6 @@ const Home = () => {
   const {enableNotifyVisible} = useContext(NotificationVisibilityContext)
 
   const surfSpotsData = useSurfSpots({ userId: user?.sub });
-
-  const { accessToken } = useAccessToken;
 
   return (
     <div className={styles.home}>

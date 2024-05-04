@@ -1,17 +1,15 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { subscribeUserToSpot } from "@src/api/spots";
-import ButtonWithArrow from "@src/components/global/ButtonWithArrow";
 import StyledSelect from "@src/components/global/StyledSelect";
 import useAccessToken from "@src/hooks/useAccessToken";
 import useRegions, { Region } from "@src/hooks/useRegions";
-import useSurfSpots, {
+import {
   SurfSpot,
   UseSurfSpotsReturn,
 } from "@src/hooks/useSurfSpots";
 import React, { useState } from "react";
 
 import styles from './styles.module.scss'
-import StyledOption from "@src/components/global/StyledOption";
 import SlideButton from "@src/components/global/SlideButton";
 
 export interface SelectPlaceholder {
@@ -30,21 +28,21 @@ const SelectForecastForm = ({
   // add error if not available.
   const {
     surfSpots,
-    isLoading: isSurfSpotsLoading,
-    isServerError: isSurfSpotsServerError,
+    // isLoading: isSurfSpotsLoading,
+    // isServerError: isSurfSpotsServerError,
     refetch,
   } = surfSpotsData;
 
   const {
     regions,
     subRegions,
-    isLoading: isRegionsLoading,
-    isServerError: isRegionsServerError,
+    // isLoading: isRegionsLoading,
+    // isServerError: isRegionsServerError,
   } = useRegions();
 
-  const isLoading = isSurfSpotsLoading && isRegionsLoading ? true : false;
-  const isServerError =
-    isSurfSpotsServerError && isRegionsServerError ? true : false;
+  // const isLoading = isSurfSpotsLoading && isRegionsLoading ? true : false;
+  // const isServerError =
+  //   isSurfSpotsServerError && isRegionsServerError ? true : false;
 
   const [currentRegion, setCurrentRegion] = useState<Region | SelectPlaceholder>({region_name:'Country'});
   const [currentSubRegion, setCurrentSubRegion] = useState<Region | SelectPlaceholder>({region_name:'Region'});

@@ -1,8 +1,5 @@
 import { FC } from 'react';
 import styles from './styles.module.scss'
-import { SignUpButton } from '@src/components/auth0/signUpButton';
-import { LoginButton } from '@src/components/auth0/loginButton';
-import { LogoutButton } from '@src/components/auth0/logoutButton';
 import NavBarAuthButtons from '../NavBarButtons';
 
 const Header:FC = () => {

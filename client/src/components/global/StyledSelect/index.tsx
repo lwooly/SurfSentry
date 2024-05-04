@@ -1,18 +1,17 @@
 "use client";
 
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, ReactNode, useEffect, useRef, useState } from "react";
 import styles from "./styles.module.scss";
 import StyledOption from "../StyledOption";
 import { Region } from "@src/hooks/useRegions";
 import { SurfSpot } from "@src/hooks/useSurfSpots";
-import { SelectProvider } from "@src/components/contexts/select.context";
 
 //handle both regions and spots
 type Option = Region | SurfSpot;
 
-function isRegion(option: Option): option is Region {
-  return (option as Region).region_name !== undefined;
-}
+// function isRegion(option: Option): option is Region {
+//   return (option as Region).region_name !== undefined;
+// }
 
 interface Props {
   options: Option[] | undefined;
@@ -61,7 +60,8 @@ const StyledSelect: FC<Props> = ({ options, onChange, parent, current }) => {
 
   // find options where filtered by parent
 
-  const dropDownOptions = []
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const dropDownOptions:Array<ReactNode> = []
   options?.forEach((option, index) => {
     // do not include current selection in dropdown list
     if (
