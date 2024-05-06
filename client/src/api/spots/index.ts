@@ -49,9 +49,14 @@ export const unSubscribeUserToSpot = async ({
   accessToken,
 }: {
   spotId: string;
-  userId: string;
-  accessToken: string;
+  userId: string | undefined;
+  accessToken: string | null;
 }) => {
+
+  if (!accessToken) {
+    console.log('access token not provided spots not fetched')
+    return;
+  }
   const res = await axios.delete(
     `${import.meta.env.VITE_API_URL}/surf-spots/${spotId}/subscribe/${userId}`,
     {

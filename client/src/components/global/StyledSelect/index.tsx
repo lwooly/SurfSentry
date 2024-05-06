@@ -5,19 +5,14 @@ import styles from "./styles.module.scss";
 import StyledOption from "../StyledOption";
 import { Region } from "@src/hooks/useRegions";
 import { SurfSpot } from "@src/hooks/useSurfSpots";
+import { SelectPlaceholder } from "@src/components/pages/home/SelectForecastForm";
+import isRegion from "@src/types/region.typeGuard";
+import isSurfSpot from "@src/types/spot.typeGuard";
 
 //handle both regions and spots
-type Option = Region | SurfSpot;
+export type Option = Region | SurfSpot;
 
-function isRegion(option: Option): option is Region {
-  return (option as Region).region_name !== undefined;
-}
-
-function isSurfSpot(option: Option): option is SurfSpot {
-  return (option as SurfSpot).spotname !== undefined;
-}
-
-const checkCurrent = (option: Option, current: Option | undefined) => {
+const checkCurrent = (option: Option, current: Option | SelectPlaceholder) => {
   if (current && isRegion(option) && isRegion(current)) {
     if (option?.region_name !== current?.region_name) {
       return true;
@@ -30,11 +25,13 @@ const checkCurrent = (option: Option, current: Option | undefined) => {
   return false;
 };
 
+
+
 interface Props {
   options: Option[] | undefined;
-  onChange: (region: Region) => void;
-  parent: Region | undefined;
-  current: Option | undefined;
+  onChange: (option: Option ) => void;
+  parent?: Region | SelectPlaceholder;
+  current: Option | SelectPlaceholder;
 }
 const StyledSelect: FC<Props> = ({ options, onChange, parent, current }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -83,9 +80,9 @@ const StyledSelect: FC<Props> = ({ options, onChange, parent, current }) => {
     // do not include current selection in dropdown list
     if (checkCurrent(option, current)) {
       //parent present for region and subregion due to placeholders.
-      if (parent) {
+      if (parent && isRegion(parent)) {
         // show options if contained by parent
-        if (isRegion(option) && option.lies_in && option?.lies_in.includes(parent.id)) {
+        if (option.lies_in && option?.lies_in.includes(parent.id)) {
           dropDownOptions.push(
             <li key={index}>
               <StyledOption

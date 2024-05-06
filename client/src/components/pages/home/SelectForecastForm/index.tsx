@@ -1,16 +1,18 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { subscribeUserToSpot } from "@src/api/spots";
-import StyledSelect from "@src/components/global/StyledSelect";
+import StyledSelect, { Option } from "@src/components/global/StyledSelect";
 import useAccessToken from "@src/hooks/useAccessToken";
 import useRegions, { Region } from "@src/hooks/useRegions";
 import {
   SurfSpot,
   UseSurfSpotsReturn,
 } from "@src/hooks/useSurfSpots";
-import React, { useState } from "react";
+import { useState } from "react";
 
 import styles from './styles.module.scss'
 import SlideButton from "@src/components/global/SlideButton";
+import isSurfSpot from "@src/types/spot.typeGuard";
+import isRegion from "@src/types/region.typeGuard";
 
 export interface SelectPlaceholder {
 region_name: string;
@@ -48,27 +50,40 @@ const SelectForecastForm = ({
   const [currentSubRegion, setCurrentSubRegion] = useState<Region | SelectPlaceholder>({region_name:'Region'});
   const [currentSpot, setCurrentSpot] = useState<SurfSpot | SelectPlaceholder>({region_name: 'Spot'});
 
-  const handleRegionChange = (region: Region) => {
+  const handleRegionChange = (region: Option) => {
+    if(!isRegion(region)) {
+      return
+    }
     setCurrentRegion(region);
     setCurrentSubRegion({region_name:'Region'})
     setCurrentSpot({region_name: 'Spot'})
   };
 
-  const handleSubRegionChange = (subRegion: Region) => {
-    console.log(subRegion)
+  const handleSubRegionChange = (subRegion: Option) => {
+    if(!isRegion(subRegion)) {
+      return
+    }
     setCurrentSubRegion(subRegion);
     setCurrentSpot({region_name: 'Spot'})
   };
 
-  const handleSpotChange = (spot: SurfSpot) => {
+  const handleSpotChange = (spot: Option) => {
+    if(!isSurfSpot(spot)){
+      return
+    }
     setCurrentSpot(spot);
   };
 
-  const monitorNewForecast = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const monitorNewForecast = async () => {
     setCurrentSpot({region_name: 'Spot'})
-    if (!currentSpot) {
+    if (!currentSpot || !isSurfSpot(currentSpot)) {
+      console.log('Server error: invalid spot')
       return;
+    }
+
+    if (!user?.sub || !accessToken) {
+      console.log('Server error: invalid user')
+      return
     }
 
     try {

@@ -1,13 +1,12 @@
+import { SelectPlaceholder } from "@src/components/pages/home/SelectForecastForm";
 import styles from "./styles.module.scss";
 import { Region } from "@src/hooks/useRegions";
 import { SurfSpot } from "@src/hooks/useSurfSpots";
+import isRegion from "@src/types/region.typeGuard";
+import isSurfSpot from "@src/types/spot.typeGuard";
 
 //handle both regions and spots
 type Option = Region | SurfSpot;
-
-function isRegion(option: Option): option is Region {
-  return (option as Region).region_name !== undefined;
-}
 
 const StyledOption = ({
   handleClickFn,
@@ -17,7 +16,7 @@ const StyledOption = ({
   disabled,
 }: {
   handleClickFn: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  option: Option | undefined;
+  option: Option | SelectPlaceholder | undefined;
   isDropdown?: boolean;
   isOpen?: boolean;
   disabled?:boolean
@@ -39,7 +38,7 @@ const StyledOption = ({
         {option
           ? isRegion(option)
             ? option.region_name
-            : option.spotname
+            : isSurfSpot(option) ? option.spotname : ''
           : ""}
       </span>
       {isDropdown && (

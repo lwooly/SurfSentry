@@ -9,7 +9,7 @@ import Features from "@src/components/pages/home/Features";
 import HeroMain from "@src/components/pages/home/heroMain";
 import { useContext } from "react";
 import { NotificationVisibilityContext } from "@src/components/contexts/Notifications.context";
-import SendNotificationsButton from "@src/components/global/SendNotificationsButton";
+// import SendNotificationsButton from "@src/components/global/SendNotificationsButton";
 
 
 const Home = () => {
@@ -38,7 +38,7 @@ const Home = () => {
             </div>
            
             }
-            <SendNotificationsButton />
+            {/* <SendNotificationsButton /> */}
             <EnableNotifications />
 
             {!enableNotifyVisible && <SelectForecastForm surfSpotsData={surfSpotsData} />}
