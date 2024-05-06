@@ -6,8 +6,8 @@ const Header:FC = () => {
     return (
         <div className={styles.header}>
             <div className={styles.container}>
-                <img className={styles.logo} src='/src/assets/images/logos/surfSentry.png' alt='SurfSentry logo'/>
-                <img className={`${styles.logo} ${styles.logoText}`} src='/src/assets/images/logos/surfSentryText.png' alt='SurfSentry logo'/>
+                <img className={styles.logo} src='/public/images/logos/surfSentry.png' alt='SurfSentry logo'/>
+                <img className={`${styles.logo} ${styles.logoText}`} src='/public/images/logos/surfSentryText.png' alt='SurfSentry logo'/>
                 <div className={styles.btns}>
                 <NavBarAuthButtons />
                 </div>
