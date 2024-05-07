@@ -8,16 +8,21 @@ import { SurfSpot } from "@src/hooks/useSurfSpots";
 import { SelectPlaceholder } from "@src/components/pages/home/SelectForecastForm";
 import isRegion from "@src/types/region.typeGuard";
 import isSurfSpot from "@src/types/spot.typeGuard";
+import isPlaceholder from "@src/types/placeholder.typeGuard";
 
 //handle both regions and spots
 export type Option = Region | SurfSpot;
 
 const checkCurrent = (option: Option, current: Option | SelectPlaceholder) => {
-  if (current && isRegion(option) && isRegion(current)) {
+  if (current && isRegion(option) && (isPlaceholder(current) || isRegion(current))) {
     if (option?.region_name !== current?.region_name) {
       return true;
     }
-  } else if (current && isSurfSpot(option) && isSurfSpot(current)) {
+  } else if (current && isSurfSpot(option)) {
+
+    if (isPlaceholder(current)){
+      return true;
+    }
     if (option?.spotname !== current?.spotname) {
       return true;
     }

@@ -38,7 +38,7 @@ const StyledOption = ({
         {option
           ? isRegion(option)
             ? option.region_name
-            : isSurfSpot(option) ? option.spotname : ''
+            : isSurfSpot(option) ? option.spotname : option.region_name
           : ""}
       </span>
       {isDropdown && (
