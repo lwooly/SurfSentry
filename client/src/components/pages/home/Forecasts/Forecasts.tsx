@@ -124,7 +124,7 @@ const Forecasts = ({
                         }}
                       >
                         <img
-                          src="/src/assets/images/icons/delete_remove_icon.svg"
+                          src="/images/icons/delete_remove_icon.svg"
                           alt="delete"
                         />
                       </button>

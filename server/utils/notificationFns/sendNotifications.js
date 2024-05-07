@@ -10,7 +10,7 @@ await Promise.all(
 
       const payload = JSON.stringify( {title: 'SurfSentry',
     body: 'Check the forecast...',
-    image:'../src/assets/images/logos/surfSentryLogo.svg'})
+    image:'../images/logos/surfSentryLogo.svg'})
 
       try {
         await sendWebpushNotification(subscription, payload);

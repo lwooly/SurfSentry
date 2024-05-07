@@ -13,7 +13,7 @@ const SlideButton: FC<SlideButtonProps> = ({ children, isBlue, ...props }) => {
     <button className={`${styles.slideButton} ${isBlue ? styles.isBlue : ''}`} {...props}>
       <div className={styles.contentWrapper}>{children}</div>
       <div className={styles.hoverCircle}>
-        <img src="/src/assets/images/icons/btnArrow.svg" alt="" className={styles.arrow}/>
+        <img src="/images/icons/btnArrow.svg" alt="" className={styles.arrow}/>
       </div>
     </button>
   );

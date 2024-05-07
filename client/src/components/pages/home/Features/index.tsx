@@ -8,7 +8,7 @@ const Features = () => {
       <div className={styles.container}>
         <div className={styles.contentWrapper}>
             {/* <div className={styles.feature}>
-                <img className={styles.waveImage} src="/src/assets/images/waveimg.webp" alt='wave'/>
+                <img className={styles.waveImage} src="/images/waveimg.webp" alt='wave'/>
 
             </div> */}
             <div className={styles.feature}>

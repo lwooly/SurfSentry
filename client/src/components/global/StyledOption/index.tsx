@@ -44,7 +44,7 @@ const StyledOption = ({
       {isDropdown && (
         <img
           className={styles.btnArrow}
-          src="/src/assets/images/icons/Vectorarrow.svg"
+          src="/images/icons/Vectorarrow.svg"
           alt="arrow icon"
         />
       )}
