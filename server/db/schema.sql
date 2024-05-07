@@ -11,7 +11,7 @@ CREATE TABLE
         id SERIAL PRIMARY KEY,
         data JSONB NOT NULL,
         user_id TEXT NOT NULL,
-        FOREIGN KEY (user_id) REFERENCES users (auth0_user_id)
+        FOREIGN KEY (user_id) REFERENCES users (auth0_user_id) ON DELETE CASCADE
     );
 
 CREATE TABLE
@@ -35,7 +35,7 @@ CREATE TABLE
         user_id TEXT NOT NULL,
         spot_id TEXT NOT NULL,
         PRIMARY KEY (user_id, spot_id),
-        FOREIGN KEY (user_id) REFERENCES users (auth0_user_id),
+        FOREIGN KEY (user_id) REFERENCES users (auth0_user_id) ON DELETE CASCADE,
         FOREIGN KEY (spot_id) REFERENCES spots (surfline_id)
     );
 
