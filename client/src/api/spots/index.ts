@@ -9,7 +9,6 @@ export const getSurfSpots = async ({
   accessToken,
   userId = "",
 }: surfSpotConfig) => {
-  console.log(userId);
   // Fetch all surfspots
   // If a user id is present fetch data for user subscription
   const url = `${import.meta.env.VITE_API_URL}/surf-spots/${userId}`;

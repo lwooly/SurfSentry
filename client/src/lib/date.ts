@@ -15,7 +15,5 @@ export const timestampToDateString = (timestampInSeconds:number) => {
 
     const formattedDate = date.toLocaleDateString('en-GB',options)
 
-    console.log(formattedDate)
-
     return formattedDate;
 }

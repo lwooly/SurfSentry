@@ -41,8 +41,6 @@ const SelectForecastForm = ({
     // isLoading: isRegionsLoading,
     // isServerError: isRegionsServerError,
   } = useRegions();
-
-  console.log(regions)
   // const isLoading = isSurfSpotsLoading && isRegionsLoading ? true : false;
   // const isServerError =
   //   isSurfSpotsServerError && isRegionsServerError ? true : false;
