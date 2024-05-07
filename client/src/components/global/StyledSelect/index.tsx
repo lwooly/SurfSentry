@@ -14,18 +14,20 @@ import isPlaceholder from "@src/types/placeholder.typeGuard";
 export type Option = Region | SurfSpot;
 
 const checkCurrent = (option: Option, current: Option | SelectPlaceholder) => {
-  if (current && isRegion(option) && (isPlaceholder(current) || isRegion(current))) {
+  if (current && isRegion(option) && !isSurfSpot(current)) {
     if (option?.region_name !== current?.region_name) {
       return true;
     }
   } else if (current && isSurfSpot(option)) {
+    if((current)){
+      if (isPlaceholder(current)) {
+        return true
+      }
+      if (option?.spotname !== current?.spotname) {
+        return true;
+      }
+    }
 
-    if (isPlaceholder(current)){
-      return true;
-    }
-    if (option?.spotname !== current?.spotname) {
-      return true;
-    }
   }
   return false;
 };
@@ -85,14 +87,14 @@ const StyledSelect: FC<Props> = ({ options, onChange, parent, current }) => {
     // do not include current selection in dropdown list
     if (checkCurrent(option, current)) {
       //parent present for region and subregion due to placeholders.
-      if (parent && isRegion(parent)) {
+      if (parent) {
         // show options if contained by parent
-        if (option.lies_in && option?.lies_in.includes(parent.id)) {
+        if (isRegion(parent) && option.lies_in && option?.lies_in.includes(parent.id)) {
           dropDownOptions.push(
             <li key={index}>
               <StyledOption
                 handleClickFn={(e) => handleSelect(e, option)}
-                option={option}
+                option={option} 
               />
             </li>
           );
