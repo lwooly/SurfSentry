@@ -11,6 +11,7 @@ node_modules
 dist
 dist-ssr
 *.local
+database-dump
 
 .env*
 
@@ -24,3 +25,5 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+
