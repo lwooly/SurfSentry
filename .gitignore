@@ -28,3 +28,6 @@ database-dump
 
 
 .vercel
+
+# Local Netlify folder
+.netlify
