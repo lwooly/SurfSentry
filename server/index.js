@@ -1,11 +1,19 @@
-import 'dotenv/config';
-import app from "./server.js";
-import './tasks/tasks.js'
+import "dotenv/config";
+import appSrc from "./server.js";
+import "./tasks/tasks.js";
+import serverless from "serverless-http";
 
-const {PORT = 3000, NODE_ENV = 'development'} = process.env;
+let app = appSrc;
 
-app.listen(PORT, () => {
-    console.log(`Server running on port:${PORT}`)
-});
+const { PORT = 3000, NODE_ENV = "development" } = process.env;
 
-export default app;
+if (NODE_ENV === "development") {
+  app.listen(PORT, () => {
+    console.log(`Server running on port:${PORT}`);
+  });
+} else {
+    app = serverless(app)
+}
+
+export default app
+

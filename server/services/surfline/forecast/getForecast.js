@@ -15,7 +15,8 @@ const fetchSurflineForecast = async (spotId) => {
               clarifyTimeoutError: false
             },
             headers: {
-              "Accept": "application/json, text/plain, */*"
+              "Accept": "application/json, text/plain, */*",
+              "x-vercel-id": "lhr1::8vc2v-1715166782532-fa9bb24129fd"
             },
           };
 
