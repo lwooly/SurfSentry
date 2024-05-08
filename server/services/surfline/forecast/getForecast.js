@@ -1,6 +1,5 @@
 import axios from "axios";
 import createSurflineEndpoint from "./forecastFns/createSurflineEndpoint.js";
-import { getUserAgent } from "../../../tasks/scrape/config/userAgents.js";
 
 //get all spots from surfline
 
