@@ -8,12 +8,7 @@ import { getUserAgent } from "../../../tasks/scrape/config/userAgents.js";
 const fetchSurflineForecast = async (spotId) => {
     const forecastEndpoint = createSurflineEndpoint(spotId);
     try {
-        const response = await axios.get(forecastEndpoint, {
-            headers: {
-              "User-Agent": getUserAgent(),
-              Referer: "https://www.google.com",
-            },
-          })
+        const response = await axios.get(forecastEndpoint)
         // return condition forecast only
         // console.log(response.data.data.conditions)
         return response.data.data.conditions
