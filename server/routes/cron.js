@@ -1,5 +1,5 @@
 import Router from "express-promise-router";
-import { runCronTasks } from "../lib/apiFunctions/cron/controllers";
+import { runCronTasks } from "../lib/apiFunctions/cron/controllers.js";
 
 
 const router = new Router();
