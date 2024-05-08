@@ -36,7 +36,7 @@ export const surfCheck = async () => {
     if (forecast) {
       try {
         const res = await addForecasttoDB(forecast);
-        console.log(`Forecast added to database`, forecast.spotname);
+        // console.log(`Forecast added to database`, forecast.spotname);
         // console.log('forecasts added to db')
       } catch (err) {
         console.log(`Could not add ${forecast?.spotname} forecast to db`, err);
