@@ -8,6 +8,9 @@ import cron from "./cron.js"
 
 
 const mountRoutes = (app) => {
+  app.get('/', (req, res) =>  {
+    res.send('Api is running')
+  });
   app.use("/users", users);
   app.use("/save-subscription", serviceWorkers);
   app.use("/send-notification", pushManager);
