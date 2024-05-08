@@ -8,11 +8,6 @@ const fetchSurflineForecast = async (spotId) => {
     const forecastEndpoint = createSurflineEndpoint(spotId);
     try {
 
-        axios.interceptors.request.use(request => {
-            console.log('Starting Request', JSON.stringify(request, null, 2))
-            return request
-          });
-
           const config = {
             transitional: {
               silentJSONParsing: true,
@@ -25,13 +20,10 @@ const fetchSurflineForecast = async (spotId) => {
           };
 
         const response = await axios.get(forecastEndpoint, )
-        // console.log('Request Headers:', response.config.headers);
-        // console.log('Request Method:', response.config.method);
-        // console.log('Request URL:', response.config.url);
-        // return condition forecast only
-        // console.log(response.data.data.conditions)
         return response.data.data.conditions
     } catch (error) {
+        console.error('Error response:', error.response);
+        console.error('Error details:', error.message);
         throw error
     }
 }
