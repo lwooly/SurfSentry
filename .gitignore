@@ -27,3 +27,4 @@ database-dump
 *.sw?
 
 
+.vercel
