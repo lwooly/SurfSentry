@@ -23,7 +23,7 @@ export const surfCheck = async () => {
         //return a forecast object for each spot
         return { spotname, surfline_id, forecast };
       } catch (error) {
-        console.log("Could not fetch surfline forecast:", error.message);
+        console.log("Could not fetch surfline forecast:", error);
       }
     })
   );
