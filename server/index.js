@@ -7,13 +7,13 @@ let app = appSrc;
 
 const { PORT = 3000, NODE_ENV = "development" } = process.env;
 
-if (NODE_ENV === "development") {
-  app.listen(PORT, () => {
-    console.log(`Server running on port:${PORT}`);
-  });
-} else {
-    app = serverless(app)
-}
+// if (NODE_ENV === "development") {
+//   app.listen(PORT, () => {
+//     console.log(`Server running on port:${PORT}`);
+//   });
+// } else {
+//     app = serverless(app)
+// }
 
-export default app
+export const handler = serverless(app)
 
