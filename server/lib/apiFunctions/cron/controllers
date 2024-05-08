@@ -1,6 +1,6 @@
 import { surfCheck } from "../../../tasks/notify/surfCheck.js";
 
-export const cron = async (req, res) => {
+const cron = async (req, res) => {
   console.log("Running CRON");
 
   try {
@@ -14,3 +14,4 @@ export const cron = async (req, res) => {
     res.status(500).json({ error: "Internal server error" })
   }
 };
+export default cron;
