@@ -5,7 +5,7 @@ import './tasks/tasks.js'
 const {PORT = 3000, NODE_ENV = 'development'} = process.env;
 
 app.listen(PORT, () => {
-    console.log(`Server running on port http://localhost:${PORT}`)
+    console.log(`Server running on port:${PORT}`)
 });
 
 export default app;

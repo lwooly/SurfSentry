@@ -19,10 +19,10 @@ const fetchSurflineForecast = async (spotId) => {
             },
           };
 
-        const response = await axios.get(forecastEndpoint, )
+        const response = await axios.get(forecastEndpoint )
         return response.data.data.conditions
     } catch (error) {
-        console.error('Error response:', JSON.stringify(error.response, null, 2));
+        console.error('Error response:', error.response.request._header);
         console.error('Error details:', error.message);
         throw error
     }
