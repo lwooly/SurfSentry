@@ -28,12 +28,14 @@ export const surfCheck = async () => {
     })
   );
 
+  console.log('Spot forecasts length', spotForecasts.length)
+
   // save spot forecasts to db for client reference
   spotForecasts.map(async (forecast) => {
 
     try {
       const res = await addForecasttoDB(forecast);
-      // console.log(`Forecast added to database`, forecast.spotname)
+      console.log(`Forecast added to database`, forecast.spotname)
       // console.log('forecasts added to db')
     }catch (err){
       console.log(`Could not add ${forecast?.spotname} forecast to db`, err)
