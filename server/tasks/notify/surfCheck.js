@@ -29,6 +29,7 @@ export const surfCheck = async () => {
   );
 
   console.log("Spot forecasts length", spotForecasts.length);
+  console.log(spotForecasts)
 
   // save spot forecasts to db for client reference
   spotForecasts.map(async (forecast) => {
