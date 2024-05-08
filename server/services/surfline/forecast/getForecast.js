@@ -7,6 +7,10 @@ import createSurflineEndpoint from "./forecastFns/createSurflineEndpoint.js";
 const fetchSurflineForecast = async (spotId) => {
     const forecastEndpoint = createSurflineEndpoint(spotId);
     try {
+        axios.interceptors.request.use(request => {
+            console.log('Sending Headers:', request.headers);
+            return request;
+          })
 
           const config = {
             transitional: {
@@ -22,7 +26,7 @@ const fetchSurflineForecast = async (spotId) => {
         const response = await axios.get(forecastEndpoint, )
         return response.data.data.conditions
     } catch (error) {
-        console.error('Error response:', error.response);
+        // console.error('Error response:', error.response);
         console.error('Error details:', error.message);
         throw error
     }
