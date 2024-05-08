@@ -1,8 +1,9 @@
 import Router from "express-promise-router";
-import  cron  from "../lib/apiFunctions/cron/controllers";
+import { runCronTasks } from "../lib/apiFunctions/cron/controllers";
+
 
 const router = new Router();
 
-router.get("/", cron);
+router.get("/", runCronTasks);
 
 export default router;
