@@ -1,5 +1,5 @@
 [functions]
-  directory = "/server"
+  directory = "/"
   external_node_modules = ["express"]
   node_bundler = "esbuild"
 [[redirects]]
