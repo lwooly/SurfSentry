@@ -4,6 +4,7 @@ import pushManager from "./pushManager.js";
 import surfSpots from "./spots.js"
 import regions from './regions.js'
 import forecasts from './forecasts.js'
+import cron from "./cron.js"
 
 
 const mountRoutes = (app) => {
@@ -13,7 +14,7 @@ const mountRoutes = (app) => {
   app.use("/surf-spots", surfSpots);
   app.use("/regions", regions)
   app.use("/forecasts", forecasts)
-
+  app.use("/cron", cron)
 };
 
 export default mountRoutes;

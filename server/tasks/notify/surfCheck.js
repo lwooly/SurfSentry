@@ -28,44 +28,45 @@ export const surfCheck = async () => {
     })
   );
 
-  console.log('Spot forecasts length', spotForecasts.length)
+  console.log("Spot forecasts length", spotForecasts.length);
 
   // save spot forecasts to db for client reference
   spotForecasts.map(async (forecast) => {
-
-    try {
-      const res = await addForecasttoDB(forecast);
-      console.log(`Forecast added to database`, forecast.spotname)
-      // console.log('forecasts added to db')
-    }catch (err){
-      console.log(`Could not add ${forecast?.spotname} forecast to db`, err)
+    if (forecast) {
+      try {
+        const res = await addForecasttoDB(forecast);
+        console.log(`Forecast added to database`, forecast.spotname);
+        // console.log('forecasts added to db')
+      } catch (err) {
+        console.log(`Could not add ${forecast?.spotname} forecast to db`, err);
+      }
     }
-  })
+  });
 
   //check spot forecast data for any good or epic ratings and return these only
 
   //TODO - check why this isnt returning anything?
-  const goodForecasts = checkForecast(spotForecasts)
+  const goodForecasts = checkForecast(spotForecasts);
 
-//send notifications to good forecasts
-  const spotSurflineIds = goodForecasts ? goodForecasts.map(forecast => forecast?.surfline_id) : [];
+  //send notifications to good forecasts
+  const spotSurflineIds = goodForecasts
+    ? goodForecasts.map((forecast) => forecast?.surfline_id)
+    : [];
 
   if (spotSurflineIds.length === 0) {
-    console.log('No data available or error in fetching data');
+    console.log("No data available or error in fetching data");
   } else {
-    console.log('sending notifications for ', spotSurflineIds.length, 'spots')
+    console.log("sending notifications for ", spotSurflineIds.length, "spots");
   }
   //get users who subscribe to this spot.
   const subscriptions = await getSpotSubscriptionsFromDB(spotSurflineIds);
 
-  console.log('spot subscribers:' , subscriptions.length)
+  console.log("spot subscribers:", subscriptions.length);
 
   // notify the users - subscriptions.
   await sendNotifications(subscriptions);
 
-
-  console.log('notifications sent')
-  
+  console.log("notifications sent");
 };
 
 // surfCheck()

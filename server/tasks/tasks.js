@@ -8,7 +8,3 @@ import { surfCheck } from "./notify/surfCheck.js"
 //     surfCheck()
 //   });
 
-export const cron = () => {
-  console.log('Running CRON')
-  surfCheck()
-}
